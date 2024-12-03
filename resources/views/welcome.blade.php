@@ -12,7 +12,7 @@
                 <h1 class="font-bold text-xl mt-4">Start Your Journey</h1>
                 <p class="text-sm mt-2 leading-normal">
                     We've been active since mid-2020, starting as an online course website during the pandemic. 
-                    Since then, we have grown into our own gyms. Begin your journey today!
+                    Since then, we have grown into our own gyms. Begin your journey today!!!
                 </p>
                 <a href="{{ auth()->check() ? '/membership' : '/login' }}" class="inline-block mt-4">
                     <button
