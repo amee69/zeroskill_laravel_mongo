@@ -2,7 +2,9 @@
     <!-- Hero Section -->
     <div class="relative">
         <!-- Desktop Video Section -->
-        <video autoplay loop muted src="videos/indexbg.mp4" alt="Background Image" 
+        <video autoplay loop muted src=" {{ asset('videos/indexbg.mp4') }}" 
+        
+        alt="Background Image" 
             class="hidden sm:block w-full h-auto"></video>
 
         <!-- Mobile Video Section -->
