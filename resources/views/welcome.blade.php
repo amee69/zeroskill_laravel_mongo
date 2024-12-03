@@ -2,7 +2,7 @@
     <!-- Hero Section -->
     <div class="relative">
         <!-- Desktop Video Section -->
-        <video autoplay loop muted src=" {{ asset('videos/membershipbg2.mp4') }}" 
+        <video autoplay loop muted src=" {{ asset('videos/indexbg.mp4') }}" 
         
         alt="Background Image" 
             class="hidden sm:block w-full h-auto"></video>
