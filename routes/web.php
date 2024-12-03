@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PurchaseMembershipController;
-use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\admin\AdminController;
 use App\Http\Controllers\admin\ManageTierController;
 use App\Http\Controllers\admin\ManageProductsController;
 use App\Http\Controllers\CartController;
