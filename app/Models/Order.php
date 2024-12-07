@@ -25,6 +25,7 @@ class Order extends MongoModel
         'shipping_details',
         'payment_method',
         'items',
+        'cancellation_reason',
         'created_at',
         'updated_at',
     ];

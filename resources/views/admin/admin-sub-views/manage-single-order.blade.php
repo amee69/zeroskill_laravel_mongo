@@ -62,7 +62,7 @@
 
 
                 <!-- Cancel Button -->
-                <form action="" method="POST">
+                <form action="{{route('admin.order.cancel', $order->id)}}" method="POST">
                     @csrf
                     @method('PATCH')
                     <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">

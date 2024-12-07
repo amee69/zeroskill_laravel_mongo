@@ -143,6 +143,67 @@ public function deleteProduct($id)
 }
 
 
+
+public function editProduct($id)
+{
+    // Find the product by ID or fail
+    $product = Product::findOrFail($id);
+    
+    // Retrieve all categories for the dropdown list
+    $categories = Category::all();
+
+    // Pass both the product and categories to the view
+    return view('admin.admin-sub-views.edit-product', compact('product', 'categories'));
+}
+
+
+
+public function updateProduct(Request $request, $id)
+{
+    // Find the product by ID or fail
+    $product = Product::findOrFail($id);
+
+    // Validate the form data
+    $validatedData = $request->validate([
+        'product_name' => 'required|string|max:255',
+        'description' => 'nullable|string|max:800',
+        'price' => 'required|numeric|min:0',
+        'stock' => 'required|integer|min:0',
+        'category_id' => 'required|exists:categories,_id',
+        'images.*' => 'image|max:2048', // Validate each image
+    ]);
+
+    // Update product fields
+    $product->product_name = $validatedData['product_name'];
+    $product->description = $validatedData['description'];
+    $product->price = $validatedData['price'];
+    $product->stock = $validatedData['stock'];
+    $product->category_id = $validatedData['category_id'];
+
+    // Handle image uploads if new images are provided
+    if ($request->hasFile('images')) {
+        $imagePaths = [];
+
+        foreach ($request->file('images') as $image) {
+            $fileName = $image->store('images/products', 'public');
+            $imagePaths[] = 'storage/' . $fileName;
+        }
+
+        // Replace the old images with the new ones
+        $product->images = $imagePaths;
+    }
+
+    // Save the updated product
+    $product->save();
+
+    // Flash success message and redirect back to the edit page
+    return redirect()->route('admin.products.edit', $product->_id)->with('success', 'Product updated successfully!');
+}
+
+
+
+
+
 // public function categires()
 // {
 //     $categories = Category::all();
@@ -155,13 +216,14 @@ public function deleteProduct($id)
 
 public function manageOrders()
 {
-    // Fetch all orders that are not completed, sorted by newest first, with pagination (10 per page)
-    $orders = Order::where('status', '!=', 'completed')
-        ->orderBy('created_at', 'desc') 
+    // Fetch all orders with the status 'processing', sorted by newest first, with pagination (10 per page)
+    $orders = Order::where('status', 'processing')
+        ->orderBy('created_at', 'desc')
         ->paginate(10);
 
     return view('admin.admin-sub-views.manage-orders', compact('orders'));
 }
+
 
 
 
@@ -187,15 +249,14 @@ public function markAsCompleted($id)
 
 
 
-
-
-
 public function manageOrderHistory()
 {
-    // Fetch all orders with pagination (10 per page)
-    $orders = Order::where('status', 'completed')->paginate(10);
+    // Fetch orders with the specified statuses and paginate (10 per page)
+    $orders = Order::whereIn('status', ['completed', 'cancelled', 'Refunded_Cancelled'])->paginate(10);
+    
     return view('admin.admin-sub-views.manage-order-history', compact('orders'));
 }
+
 
 public function singleOrderHistory($id)
 {
@@ -207,6 +268,42 @@ public function singleOrderHistory($id)
 
 
 }
+
+
+public function cancelOrderView($id){
+    $order = Order::findOrFail($id);
+    return view('admin.admin-sub-views.cancel-order', compact('order'));
+
+    
+}
+
+public function cancelOrder(Request $request, $id)
+{
+    // Validate the cancellation reason
+    $request->validate([
+        'cancellation_reason' => 'required|string|max:800',
+    ]);
+
+    // Find the order by ID
+    $order = Order::findOrFail($id);
+
+    // Set status based on the payment method
+    if ($order->payment_method === 'card_payment') {
+        $order->status = 'Refunded_Cancelled';
+    } else {
+        $order->status = 'cancelled';
+    }
+
+    // Add the cancellation reason
+    $order->cancellation_reason = $request->input('cancellation_reason');
+
+    // Save the updated order
+    $order->save();
+
+    // Redirect back to the manage-orders view with a success message
+    return redirect()->route('admin.manage.orders')->with('success', 'Order Cancelled Successfully!');
+}
+
 
 
 

@@ -69,12 +69,17 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
     // Shop Management
     Route::get('/controls/shop/manage/category', [ManageProductsController::class, 'manageCategory'])->name('admin.shop');
     Route::get('/controls/shop/manage/products', [ManageProductsController::class, 'manageProducts'])->name('admin.manage.products');
+    Route::get('/controls/shop/manage/products/edit-product/{id}', [ManageProductsController::class, 'editProduct'])->name('admin.products.edit');
+    Route::put('/controls/shop/manage/products/process/{id}', [ManageProductsController::class, 'updateProduct'])->name('admin.product.update');
     Route::delete('/controls/shop/manage/products/{id}', [ManageProductsController::class, 'deleteProduct'])->name('admin.products.delete');
     Route::get('/controls/shop/manage/orders', [ManageProductsController::class, 'manageOrders'])->name('admin.manage.orders');
     Route::get('/controls/shop/manage/order-history', [ManageProductsController::class, 'manageOrderHistory'])->name('admin.manage.history');
 
     Route::get('/controls/shop/manage/order/{id}/edit', [ManageProductsController::class, 'manageSingleOrder'])->name('admin.manage.singleorder');
     Route::get('/controls/shop/manage/order/{order}/complete', [ManageProductsController::class, 'markAsCompleted'])->name('admin.order.complete');
+
+    Route::patch('/controls/shop/manage/order/cancel/{id}', [ManageProductsController::class, 'cancelOrderView'])->name('admin.order.cancel');
+    Route::patch('/controls/shop/manage/order/cancel/process/{id}', [ManageProductsController::class, 'cancelOrder'])->name('admin.order.cancel.process');
 
 
     Route::get('/controls/shop/manage/products/{id}/history', [ManageProductsController::class, 'singleOrderHistory'])->name('admin.manage.singleorder.history');
