@@ -24,29 +24,35 @@
                 </div> --}}
 
                 <div x-data="{
-                    images: {{ json_encode(array_map(fn($image) => asset($image), $product->images)) }}, 
-                   
+                    images: {{ json_encode(array_map(fn($image) => asset($image), is_array($product->images) ? $product->images : [])) }},
                     currentIndex: 0,
                     defaultImage: '{{ asset('storage/images/Noimage.jpg') }}'
                 }" class="product-images">
-
+                
                     <!-- Main Image Display -->
                     <div class="border rounded-lg">
                         <img :src="images.length ? images[currentIndex] : defaultImage" 
                              alt="{{ $product->product_name }}"
                              class="rounded-lg shadow-md object-cover h-96 w-auto mx-auto border">
                     </div>
-                    
-
+                
                     <!-- Thumbnails -->
                     <div class="flex space-x-2 mt-4">
                         <template x-for="(image, index) in images" :key="index">
                             <img :src="image" @click="currentIndex = index"
-                                class="w-16 h-16 object-cover border rounded cursor-pointer">
+                                 class="w-16 h-16 object-cover border rounded cursor-pointer hover:opacity-75">
+                        </template>
+                
+                        <!-- Fallback Thumbnail if No Images Exist -->
+                        <template x-if="images.length === 0">
+                            <img :src="defaultImage" 
+                                 alt="No Image Available"
+                                 class="w-16 h-16 object-cover border rounded opacity-50">
                         </template>
                     </div>
-
+                
                 </div>
+                
 
 
 
