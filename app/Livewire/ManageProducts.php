@@ -31,7 +31,7 @@ class ManageProducts extends Component
         // Validate the form data
         $this->validate([
             'product_name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:100',
+            'description' => 'nullable|string|max:800',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
             'category_id' => 'required|exists:categories,_id',
