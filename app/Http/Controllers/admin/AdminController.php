@@ -6,71 +6,191 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\MembershipTier;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
-    /**
-     * Display the admin dashboard.
-     */
+    
     public function index()
     {
         return view('admin.admin');
     }
 
-    /**
-     * Display members with role 'member' (role = 'member').
-     */
+    
     public function members()
     {
-        // Fetch all users with a role of 'normal' and a non-empty membership field
+       
         $members = User::where('role', 'normal')
             ->whereNotNull('membership')
             ->paginate(6);
 
             // dd($members);
-
-        // Create an array to store membership tier names
+//creating an array with membership names and their index with the user id
+        
         $membershipTiers = [];
 
         foreach ($members as $member) {
-            // Check if the member has a tier_id in the membership
+           
             $tierId = $member->membership['tier_id'] ?? null;
 
             if ($tierId) {
-                // Find the tier name based on the tier ID
+                
                 $tier = MembershipTier::find($tierId);
                 $membershipTiers[$member->id] = $tier ? $tier->tier_name : 'N/A';
             } else {
                 $membershipTiers[$member->id] = 'N/A';
             }
         }
+        // dd($members);
 
-        // Pass the members and their membership tiers to the view
+       
         return view('admin.admin-sub-views.members', compact('members', 'membershipTiers'));
     }
 
+    public function updateMemberMembership($id)
+    {
+        
+        $user = User::findOrFail($id);
 
 
-    /**
-     * Display all membership tiers.
-     */
+
+        
+        $membershiptiers = MembershipTier::all();
+        $currentTier = MembershipTier::find($user->membership['tier_id'] ?? null);
+
+        
+        return view('admin.admin-sub-views.update-member-membership', compact('user', 'membershiptiers', 'currentTier'));
+    }
+
+
+
+   
     public function membershiptiers()
     {
-        $membershiptiers = MembershipTier::all(); // Fetch all membership tiers
+        $membershiptiers = MembershipTier::all(); 
         return view('admin.admin-sub-views.membershiptiers', compact('membershiptiers'));
     }
 
-    /**
-     * Display all registered users (role = 'normal').
-     */
+
+    
+
+    public function updateMemberMembershipProcess(Request $request, $id)
+    {
+       
+        $tierId = $request->input('membership_tier');
+    
+    
+        $user = User::findOrFail($id);
+    
+        
+        $tier = MembershipTier::findOrFail($tierId);
+    
+       
+        $startDate = Carbon::now();
+    
+       
+        $endDate = $startDate->copy()->addDays((int)$tier->period);
+    
+       
+        $user->membership = [
+            'tier_id' => $tier->id,
+            'start_date' => $startDate->toISOString(),
+            'end_date' => $endDate->toISOString(),
+            'status' => 'Active',
+        ];
+    
+     
+        $user->save();
+    
+        
+        return redirect()->back()->with('success', 'Membership updated successfully!');
+    }
+
+    public function cancelMemberMembership($id)
+{
+    // Find the user by ID
+    $user = User::findOrFail($id);
+
+    // Set the membership to null
+    $user->membership = null;
+
+    // Save the changes
+    $user->save();
+
+    // Redirect to the members view with a success message
+    return redirect()->route('admin.members')->with('success', 'Membership cancelled successfully!');
+}
+
+    
+
+
+
+
+
+    
     public function registeredusers()
     {
-        // Fetch all users with role 'normal'
-        $allusers = User::where('role', 'normal') // Adjusted to use the role field
-            ->paginate(10); // Paginate the data (10 per page)
+        
+        $allusers = User::where('role', 'normal') 
+            ->paginate(10); 
 
         return view('admin.admin-sub-views.registered-users', compact('allusers'));
     }
+
+
+
+
+
+
+
+
+    public function editRegisteredUser($id)
+    {
+       
+        $user = User::findOrFail($id);
+
+        
+        return view('admin.admin-sub-views.edit-registered-user', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+{
+    
+    $validatedData = $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'number' => 'nullable|string|max:15',
+        'nic' => 'nullable|string|max:20',
+        'address' => 'nullable|string|max:500',
+    ]);
+
+    
+    $user = User::findOrFail($id);
+    $user->update($validatedData);
+
+   
+    return redirect()->back()->with('success', 'User details updated successfully!');
+}
+
+
+
+public function deleteRegisteredUser($id)
+{
+
+    $user = User::findOrFail($id);
+
+    
+    $user->delete();
+
+    return redirect()->back()->with('success', 'User deleted successfully!');
+
+
+
+}
+
+
+
+
 
 
 

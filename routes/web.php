@@ -56,7 +56,14 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
 
     // Admin Member Management
     Route::get('/controls/members', [AdminController::class, 'members'])->name('admin.members');
-    Route::get('/controls/registered-users', [AdminController::class, 'registeredusers'])->name('admin.registered.users');
+    Route::get('/controls/membership/edit/{id}', [AdminController::class, 'updateMemberMembership'])->name('update.member.membership');
+    Route::patch('/admin/members/{id}/update-process', [AdminController::class, 'updateMemberMembershipProcess'])->name('admin.update.member.membership');
+
+    Route::delete('/admin/members/{id}/cancel-membership', [AdminController::class, 'cancelMemberMembership'])->name('admin.cancel.member.membership');
+
+
+
+    Route::get('/controls/registered-users', action: [AdminController::class, 'registeredusers'])->name('admin.registered.users');
 
     // Membership Tier Management
     Route::get('/controls/membership-tiers', [AdminController::class, 'membershiptiers'])->name('admin.membership.tiers');
@@ -98,8 +105,10 @@ Route::middleware(['auth', CheckUserRole::class . ':admin'])->group(function () 
     Route::delete('/admin/categories/{category}', [ManageProductsController::class, 'deleteCat'])->name('admin.categories.delete');
 
     // User Management
-    Route::get('/users/{id}/edit', [AdminController::class, 'edit'])->name('users.edit');
-    Route::delete('/users/{id}', [AdminController::class, 'destroy'])->name('users.destroy');
+    Route::get('/users/{id}/edit', [AdminController::class, 'editRegisteredUser'])->name('users.edit');
+    Route::patch('/admin/users/{id}/update', [AdminController::class, 'update'])->name('admin.user.update');
+
+    Route::delete('/users/{id}', [AdminController::class, 'deleteRegisteredUser'])->name('users.destroy');
 });
 
 // Welcome Route for Authenticated Users

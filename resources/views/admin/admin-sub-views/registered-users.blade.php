@@ -1,12 +1,18 @@
 <x-guest-layout>
-    <!-- resources/views/admin/dashboard.blade.php -->
     <x-admin-layout>
         <h1 class="text-2xl font-bold mb-4">Registered Users</h1>
-        <p>This is the list of registered users:</p>
-        
-        <table class="table-auto w-full border-collapse border border-gray-300  rounded-lg">
+        <p class="mb-4">This is the list of registered users:</p>
+
+        <!-- Success Message -->
+        @if (session('success'))
+            <div class="mb-6 p-3 bg-green-500 text-white rounded">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <table class="table-auto w-full border-collapse border border-gray-300 rounded-lg">
             <thead>
-                <tr class="bg-black">
+                <tr class="bg-black text-white">
                     <th class="border border-gray-300 px-4 py-2">ID</th>
                     <th class="border border-gray-300 px-4 py-2">Name</th>
                     <th class="border border-gray-300 px-4 py-2">Email</th>
@@ -18,7 +24,7 @@
             </thead>
             <tbody>
                 @foreach($allusers as $user)
-                    <tr>
+                    <tr class="hover:bg-gray-100">
                         <td class="border border-gray-300 px-4 py-2">{{ $user->id }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $user->email }}</td>
@@ -36,8 +42,9 @@
                     </tr>
                 @endforeach
             </tbody>
-            
         </table>
+
+        <!-- Pagination Links -->
         <div class="mt-4">
             {{ $allusers->links() }}
         </div>
