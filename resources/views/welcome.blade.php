@@ -63,50 +63,103 @@
         </p>
     </div>
 
-    <!-- Static Review Cards -->
-    <section class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 px-4 sm:px-6 md:px-24 mx-auto mb-20">
-        <!-- Review Card 1 -->
-        <div class="bg-red-600 text-white rounded-3xl p-6">
-            <div class="flex items-center">
-                <img src="images/user.png" alt="Profile" class="h-12 w-12 rounded-full">
-                <div class="ml-4">
-                    <h2 class="text-lg font-semibold">Member</h2>
+    <section class="px-4 sm:px-6 md:px-24 mx-auto mb-20">
+        <!-- Container for Scrollable Mobile Layout -->
+        <div class="sm:hidden overflow-x-auto">
+            <div class="flex space-x-4 w-max">
+                <!-- Review Card 1 -->
+                <div class="bg-red-600 text-white rounded-3xl p-6 w-72 flex-shrink-0">
+                    <div class="flex items-center">
+                        <img src="images/user.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        <div class="ml-4">
+                            <h2 class="text-lg font-semibold">Member</h2>
+                        </div>
+                    </div>
+                    <p class="italic mt-4">“I never went to a gym and this is my first one. The staff were friendly, and it was a nice community in general.”</p>
+                </div>
+    
+                <!-- Review Card 2 -->
+                <div class="bg-gray-800 text-white rounded-3xl p-6 w-72 flex-shrink-0">
+                    <div class="flex items-center">
+                        <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        <div class="ml-4">
+                            <h2 class="text-lg font-semibold">Member</h2>
+                        </div>
+                    </div>
+                    <p class="italic mt-4">“Wow, the gym is everything I could ask for!”</p>
+                </div>
+    
+                <!-- Review Card 3 -->
+                <div class="bg-gray-800 text-white rounded-3xl p-6 w-72 flex-shrink-0">
+                    <div class="flex items-center">
+                        <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        <div class="ml-4">
+                            <h2 class="text-lg font-semibold">Member</h2>
+                        </div>
+                    </div>
+                    <p class="italic mt-4">“This has been a safe haven after my draft into Afghanistan. It’s simply perfect.”</p>
+                </div>
+    
+                <!-- Review Card 4 -->
+                <div class="bg-gray-800 text-white rounded-3xl p-6 w-72 flex-shrink-0">
+                    <div class="flex items-center">
+                        <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        <div class="ml-4">
+                            <h2 class="text-lg font-semibold">Member</h2>
+                        </div>
+                    </div>
+                    <p class="italic mt-4">“The equipment is clean and well-maintained. I've been going for a while, and they always keep it in great shape.”</p>
                 </div>
             </div>
-            <p class="italic mt-4">“I never went to a gym and this is my first one. The staff were friendly, and it was a nice community in general.”</p>
         </div>
-
-        <!-- Review Card 2 -->
-        <div class="bg-gray-800 text-white rounded-3xl p-6">
-            <div class="flex items-center">
-                <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
-                <div class="ml-4">
-                    <h2 class="text-lg font-semibold">Member</h2>
+    
+        <!-- Desktop Layout -->
+        <div class="hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- Review Card 1 -->
+            <div class="bg-red-600 text-white rounded-3xl p-6">
+                <div class="flex items-center">
+                    <img src="images/user.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    <div class="ml-4">
+                        <h2 class="text-lg font-semibold">Member</h2>
+                    </div>
                 </div>
+                <p class="italic mt-4">“I never went to a gym and this is my first one. The staff were friendly, and it was a nice community in general.”</p>
             </div>
-            <p class="italic mt-4">“Wow, the gym is everything I could ask for!”</p>
-        </div>
-
-        <!-- Review Card 3 -->
-        <div class="bg-gray-800 text-white rounded-3xl p-6">
-            <div class="flex items-center">
-                <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
-                <div class="ml-4">
-                    <h2 class="text-lg font-semibold">Member</h2>
+    
+            <!-- Review Card 2 -->
+            <div class="bg-gray-800 text-white rounded-3xl p-6">
+                <div class="flex items-center">
+                    <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    <div class="ml-4">
+                        <h2 class="text-lg font-semibold">Member</h2>
+                    </div>
                 </div>
+                <p class="italic mt-4">“Wow, the gym is everything I could ask for!”</p>
             </div>
-            <p class="italic mt-4">“This has been a safe haven after my draft into Afghanistan. It’s simply perfect.”</p>
-        </div>
-
-        <!-- Review Card 4 -->
-        <div class="bg-gray-800 text-white rounded-3xl p-6">
-            <div class="flex items-center">
-                <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
-                <div class="ml-4">
-                    <h2 class="text-lg font-semibold">Member</h2>
+    
+            <!-- Review Card 3 -->
+            <div class="bg-gray-800 text-white rounded-3xl p-6">
+                <div class="flex items-center">
+                    <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    <div class="ml-4">
+                        <h2 class="text-lg font-semibold">Member</h2>
+                    </div>
                 </div>
+                <p class="italic mt-4">“This has been a safe haven after my draft into Afghanistan. It’s simply perfect.”</p>
             </div>
-            <p class="italic mt-4">“The equipment is clean and well-maintained. I've been going for a while, and they always keep it in great shape.”</p>
+    
+            <!-- Review Card 4 -->
+            <div class="bg-gray-800 text-white rounded-3xl p-6">
+                <div class="flex items-center">
+                    <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    <div class="ml-4">
+                        <h2 class="text-lg font-semibold">Member</h2>
+                    </div>
+                </div>
+                <p class="italic mt-4">“The equipment is clean and well-maintained. I've been going for a while, and they always keep it in great shape.”</p>
+            </div>
         </div>
     </section>
+    
+
 </x-guest-layout>
