@@ -28,8 +28,6 @@
             @endforeach
         </select>
         
-        
-        
         @error('category_id') <span class="text-red-500">{{ $message }}</span> @enderror
 
         <!-- Image Upload Field -->
@@ -43,7 +41,6 @@
         </button>
     </form>
 
-    <!-- Feedback for success -->
     @if (session()->has('success'))
         <div class="mt-4 bg-green-500 text-white p-2 rounded">
             {{ session('success') }}

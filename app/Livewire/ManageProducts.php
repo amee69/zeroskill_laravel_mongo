@@ -11,7 +11,7 @@ class ManageProducts extends Component
 {
     use WithFileUploads;
 
-    // Properties for form inputs
+   
     public $product_name;
     public $description;
     public $price;
@@ -21,14 +21,14 @@ class ManageProducts extends Component
 
     public function render()
     {
-        // Fetch categories to display in the dropdown
+        // etch categories to display in the dropdown
         $categories = Category::all();
         return view('livewire.manage-products', compact('categories'));
     }
 
     public function addProduct()
     {
-        // Validate the form data
+        
         $this->validate([
             'product_name' => 'required|string|max:255',
             'description' => 'nullable|string|max:800',
@@ -42,7 +42,7 @@ class ManageProducts extends Component
         $imagePaths = [];
         foreach ($this->images as $image) {
             $fileName = $image->store('images/products', 'public'); // Save in 'storage/app/public/images/products'
-            $imagePaths[] = 'storage/' . $fileName; // Add path to the array
+            $imagePaths[] = 'storage/' . $fileName; // Add path to the array so it can be saved in the databade
         }
 
         // Create the product and embed the images directly
@@ -52,13 +52,13 @@ class ManageProducts extends Component
             'price' => $this->price,
             'stock' => $this->stock,
             'category_id' => $this->category_id,
-            'images' => $imagePaths, // Embed the array of image paths
+            'images' => $imagePaths, 
         ]);
 
-        // Reset form fields
+       
         $this->reset(['product_name', 'description', 'price', 'stock', 'category_id', 'images']);
 
-        // Flash success message
+        
         session()->flash('success', 'Product added successfully!');
     }
 }

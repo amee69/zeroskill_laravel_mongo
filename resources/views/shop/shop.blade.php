@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     <x-shop-layout>
         <div class="relative min-h-screen flex flex-col justify-between">
             <div class="relative z-10 flex flex-col items-center">
@@ -38,6 +38,10 @@
                                 </button>
                                 @if ($product->stock > 0)
                                     <h2 class="text-green-700 font-semibold">In Stock</h2>
+                                    
+                                    <livewire:cart-add-all :product-id="$product->_id" :product-name="$product->product_name" :price="$product->price" :stock="$product->stock" />
+
+
                                 @else
                                     <h2 class="text-red-400 font-semibold">Out Of Stock</h2>
                                 @endif
@@ -75,6 +79,8 @@
                                     </svg>
                                 </button>
                                 @if ($product->stock > 0)
+                                
+                                
                                     <h2 class="text-green-700 font-semibold text-sm">In Stock</h2>
                                 @else
                                     <h2 class="text-red-400 font-semibold text-sm">Out Of Stock</h2>
@@ -93,4 +99,119 @@
             </div>
         </div>
     </x-shop-layout>
+</x-guest-layout> --}}
+
+
+
+<x-guest-layout>
+    <x-shop-layout>
+        <div class="relative min-h-screen flex flex-col justify-between">
+            <div class="relative z-10 flex flex-col items-center">
+                <!-- Header Section -->
+                <div class="flex justify-start w-full max-w-screen-2xl px-4 py-2">
+                    <h1 id="start" class="font-bold text-3xl sm:text-4xl md:text-5xl text-white tracking-wider">
+                        {{ $categoryModel->category_name ?? 'All Products' }}
+                    </h1>
+                </div>
+
+                <!-- Desktop Product Grid -->
+                <div class="hidden sm:grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-screen-2xl mt-8 mx-auto">
+                    @forelse ($products as $product)
+                        <div class="shadow-lg rounded-xl overflow-hidden border border-gray-700 transition-transform transform hover:scale-105 mx-auto w-72 flex flex-col justify-between">
+                            
+                            <!-- Product Image and Name wrapped in the link -->
+                            <a href="{{ route('single.product.view', $product->_id) }}" class="block">
+                                <div class="product-images">
+                                    @if (!empty($product->images) && count($product->images) > 0)
+                                        <img src="{{ asset($product->images[0]) }}" alt="Product Image" class="w-full h-48 object-cover">
+                                    @else
+                                        <img src="{{ asset('storage/images/Noimage.jpg') }}" alt="Default Image" class="w-full h-48 object-cover">
+                                    @endif
+                                </div>
+                                <div class="p-4 text-white">
+                                    <h2 class="text-xl font-bold ">{{ $product->product_name }}</h2>
+                                    <h2 class="text-lg font-semibold text-green-500">
+                                        Rs. {{ number_format($product->price, 2) }}
+
+                                        @if ($product->stock > 0)
+                                       
+                                        <h2 class="text-green-600 font-semibold ">In Stock</h2>
+                                    @else
+                                        <h2 class="text-red-600 font-semibold">Out Of Stock</h2>
+                                    @endif
+                                    </h2>
+                                    
+                                </div>
+                            </a>
+
+                            <!-- Add to Cart Section -->
+                            <div class=" flex justify-end items-center p-4 ">
+                                @if ($product->stock > 0)
+                                    <livewire:cart-add-all :product-id="$product->_id" :product-name="$product->product_name" :price="$product->price" :stock="$product->stock" />
+                                   
+                                @else
+                                    
+                                @endif
+                            </div>
+
+                        </div>
+                    @empty
+                        <p class="text-white">No products available in this category.</p>
+                    @endforelse
+                </div>
+
+                <!-- Mobile Product Grid -->
+                <div class="grid grid-cols-2 gap-4 sm:hidden mt-8 mx-auto">
+                    @forelse ($products as $product)
+                        <div class="shadow-lg rounded-lg overflow-hidden border border-gray-700 transition-transform transform hover:scale-105 mx-auto w-full flex flex-col justify-between">
+                            
+                            <!-- Product Image and Name wrapped in the link -->
+                            <a href="{{ route('single.product.view', $product->_id) }}" class="block">
+                                <div class="product-images">
+                                    @if (!empty($product->images) && count($product->images) > 0)
+                                        <img src="{{ asset($product->images[0]) }}" alt="Product Image" class="w-full h-36 object-cover">
+                                    @else
+                                        <img src="{{ asset('storage/images/Noimage.jpg') }}" alt="Default Image" class="w-full h-36 object-cover">
+                                    @endif
+                                </div>
+                                <div class="p-3 text-white">
+                                    <h2 class="text-base font-bold mb-2">{{ $product->product_name }}</h2>
+                                    <h2 class="text-lg font-semibold text-green-500">
+                                        Rs. {{ number_format($product->price, 2) }}
+                                    </h2>
+
+                                    @if ($product->stock > 0)
+                                    
+                                    <h2 class="text-green-700 font-semibold text-sm ml-3">In Stock</h2>
+                                @else
+                                    <h2 class="text-red-400 font-semibold text-sm">Out Of Stock</h2>
+                                @endif
+                                    
+                                </div>
+                            </a>
+
+                            <!-- Add to Cart Section -->
+                            <div class="flex justify-start items-center px-3 pb-3">
+                                @if ($product->stock > 0)
+                                    <livewire:cart-add-all :product-id="$product->_id" :product-name="$product->product_name" :price="$product->price" :stock="$product->stock" />
+                                    
+                                @else
+                                   
+                                @endif
+                            </div>
+
+                        </div>
+                    @empty
+                        <p class="text-white text-sm">No products available in this category.</p>
+                    @endforelse
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination mt-6">
+                {{ $products->links() }}
+            </div>
+        </div>
+    </x-shop-layout>
 </x-guest-layout>
+

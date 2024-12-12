@@ -26,9 +26,9 @@
                             <div class="cart-item flex items-center justify-between bg-white shadow-md p-6 rounded-lg">
                                 <!-- Product Info -->
                                 <div class="flex items-center space-x-4">
-                                    <img src="{{ asset('storage/images/Noimage.jpg') }}"
+                                    {{-- <img src="{{ asset('storage/images/Noimage.jpg') }}"
                                         alt="{{ $item['product_name'] }}"
-                                        class="w-20 h-20 object-cover rounded-lg border">
+                                        class="w-20 h-20 object-cover rounded-lg border"> --}}
                                     <div>
                                         <h3 class="text-lg font-bold text-gray-800">{{ $item['product_name'] }}</h3>
                                         <p class="text-gray-600">Quantity: {{ $item['quantity'] }}</p>

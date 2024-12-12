@@ -1,5 +1,6 @@
 <x-guest-layout>
     <br><br><br><br>
+    <div class="m-2">
     <div class="max-w-md mx-auto mt-20 px-10 py-12 bg-black/50 border-2 border-white backdrop-blur-md rounded-3xl shadow-lg mb-9">
         <h1 class="text-3xl font-bold mb-6 text-center text-white">Login</h1>
 
@@ -56,4 +57,5 @@
             </div>
         </form>
     </div>
+</div>
 </x-guest-layout>
