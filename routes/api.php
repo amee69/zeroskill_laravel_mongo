@@ -13,7 +13,7 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/products', function (Request $request) {
     // Fetch all products with pagination (10 per page) and sort by creation date in descending order
-    $products = Product::orderBy('created_at', 'desc');
+    $products = Product::orderBy('created_at', 'desc')->paginate(10);
 
     // Return the products as a JSON response
     return response()->json($products);
