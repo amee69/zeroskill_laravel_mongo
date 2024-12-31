@@ -18,3 +18,12 @@ Route::get('/products', function (Request $request) {
     // Return the products as a JSON response
     return response()->json($products);
 });
+
+
+Route::get('/products/{id}', function ($id) {
+    // Fetch the product by its ID
+    $product = Product::find($id);
+
+    // Return the product as a JSON response
+    return response()->json($product);
+});
