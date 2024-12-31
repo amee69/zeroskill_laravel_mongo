@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
+use App\Models\MembershipTier;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -27,3 +28,13 @@ Route::get('/products/{id}', function ($id) {
     // Return the product as a JSON response
     return response()->json($product);
 });
+
+
+Route::get('/memberships', function (Request $request) {
+    // Fetch all membership tiers
+    $memberships = MembershipTier::all();
+
+    // Return the membership tiers as a JSON response
+    return response()->json($memberships);
+});
+    
