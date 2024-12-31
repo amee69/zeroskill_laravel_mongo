@@ -37,4 +37,12 @@ Route::get('/memberships', function (Request $request) {
     // Return the membership tiers as a JSON response
     return response()->json($memberships);
 });
+
+Route::get('/memberships/{id}', function ($id) {
+    // Fetch the membership tier by its ID
+    $membership = MembershipTier::find($id);
+
+    // Return the membership tier as a JSON response
+    return response()->json($membership);
+});
     
