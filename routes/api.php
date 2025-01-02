@@ -82,7 +82,16 @@ Route::get('/products/{id}', function ($id) {
 });
 
 
-Route::get('/memberships', function (Request $request) {
+// Route::get('/memberships', function (Request $request) {
+//     // Fetch all membership tiers
+//     $memberships = MembershipTier::all();
+
+//     // Return the membership tiers as a JSON response
+//     return response()->json($memberships);
+// });
+
+
+Route::middleware('auth:sanctum')->get('/memberships', function (Request $request) {
     // Fetch all membership tiers
     $memberships = MembershipTier::all();
 
