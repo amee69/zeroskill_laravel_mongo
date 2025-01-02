@@ -88,4 +88,10 @@ class User extends Model implements AuthenticatableContract, CanResetPassword
      * Get the role associated with the user.
      */
     // Define role relationship if necessary
+
+
+    public function tokens()
+    {
+        return $this->morphMany(PersonalAccessToken::class, 'tokenable');
+    }
 }

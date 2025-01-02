@@ -15,44 +15,44 @@
             <h1 class="text-3xl font-bold mb-6 text-center text-white z-50">Registration</h1>
         </div>
 
-        <div class="max-w-2xl mx-auto my-10 p-8 bg-black/50 border-2 border-white backdrop-blur-md rounded-3xl shadow-lg">
+        <div class="max-w-2xl mx-auto my-10 p-8 bg-black/50 border-2 border-white backdrop-blur-md rounded-3xl shadow-lg ">
             <x-validation-errors class="mb-4" />
 
             <form method="POST" action="{{ route('register') }}" class="text-black">
                 @csrf
 
                 <div>
-                    <x-label for="name" value="{{ __('Name') }}" />
+                    <x-label class="text-white" for="name" value="{{ __('Name') }}" />
                     <x-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
                 </div>
 
-                <div class="mt-4">
-                    <x-label for="email" value="{{ __('Email') }}" />
+                <div  class="mt-4">
+                    <x-label class="text-white" for="email" value="{{ __('Email') }}" />
                     <x-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label for="number" value="{{ __('Phone Number') }}" />
+                    <x-label class="text-white" for="number" value="{{ __('Phone Number') }}" />
                     <x-input id="number" class="block mt-1 w-full" type="text" name="number" :value="old('number')" required autocomplete="tel" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label for="nic" value="{{ __('NIC') }}" />
+                    <x-label class="text-white" for="nic" value="{{ __('NIC') }}" />
                     <x-input id="nic" class="block mt-1 w-full" type="text" name="nic" :value="old('nic')" required autocomplete="off" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label for="address" value="{{ __('Address') }}" />
-                    <textarea id="address" class="block mt-1 w-full bg-gray-800 text-white rounded-md" name="address" rows="3" required>{{ old('address') }}</textarea>
+                    <x-label class="text-white" for="address" value="{{ __('Address') }}" />
+                    <textarea id="address" class="block mt-1 w-full bg-white text-black rounded-md" name="address" rows="3" required>{{ old('address') }}</textarea>
                 </div>
 
                 <div class="mt-4">
-                    <x-label for="password" value="{{ __('Password') }}" />
+                    <x-label class="text-white" for="password" value="{{ __('Password') }}" />
                     <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
                 </div>
 
                 <div class="mt-4">
-                    <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
+                    <x-label class="text-white" for="password_confirmation" value="{{ __('Confirm Password') }}" />
                     <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
                 </div>
 
@@ -84,7 +84,7 @@
             </form>
         </div>
 
-        <footer class="rounded-t-full p-40 bg-black/50 backdrop-blur-md">
+        {{-- <footer class="rounded-t-full p-40 bg-black/50 backdrop-blur-md">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10">
                 <div class="w-full">
                     <h1 class="text-center text-2xl">Stay Connected</h1>
@@ -116,6 +116,6 @@
 
         <div>
             <p class="text-lg text-center bg-black/50 backdrop-blur-md text-white py-4">© 2024 Zeroskills. All rights reserved.</p>
-        </div>
+        </div> --}}
     </body>
 </x-guest-layout>
