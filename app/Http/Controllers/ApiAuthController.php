@@ -116,6 +116,50 @@ class ApiAuthController extends Controller
     
 
 
+
+
+
+    
+//     public function login(Request $request)
+// {
+//     // Validate input
+//     $request->validate([
+//         'email' => 'required|email',
+//         'password' => 'required',
+//     ]);
+
+//     try {
+//         // Retrieve the user
+//         $user = User::where('email', trim($request->email))->first();
+
+//         if (!$user) {
+//             return response()->json(['message' => 'User not found'], 404);
+//         }
+
+//         // Check if password matches
+//         if (Hash::check($request->password, $user->password)) {
+//             // Use Sanctum to generate a token
+//             $token = $user->createToken('api-token')->plainTextToken;
+
+//             return response()->json([
+//                 'message' => 'Login successful',
+//                 'token' => $token,
+//                 'user' => $user,
+//             ]);
+//         }
+
+//         return response()->json(['message' => 'Invalid credentials'], 401);
+//     } catch (\Exception $e) {
+//         // Log the error
+//         Log::error("Login failed for email " . $request->email . ": " . $e->getMessage());
+
+//         return response()->json([
+//             'message' => 'An error occurred during login. Please try again later.',
+//         ], 500);
+//     }
+// }
+
+
     public function logout(Request $request)
 {
     // Revoke the token that was used to authenticate the current request

@@ -42,7 +42,6 @@ class PurchaseMembershipController extends Controller
     }
     
 
-//This is the process payment, as in when you click the purchase button
 
 
 
@@ -58,7 +57,9 @@ public function purchaseProcess(Request $request)
     $membershipTier = MembershipTier::find($tierId);
 
     if (!$membershipTier) {
-        return redirect()->back()->with('error', 'Membership tier not found.');
+        return redirect()->back()->with('error', 
+        
+        'Membership tier not found.');
     }
 
     

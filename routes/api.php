@@ -16,8 +16,8 @@ Route::get('/user', function (Request $request) {
 
 
 // Public routes
-Route::post('/register', [ApiAuthController::class, 'register']); // API user registration
-Route::post('/login', [ApiAuthController::class, 'login']);       // API user login
+Route::post('/register', [ApiAuthController::class, 'register']); 
+Route::post('/login', [ApiAuthController::class, 'login']);       
 
 Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:sanctum');
 
@@ -30,13 +30,12 @@ Route::middleware('auth:sanctum')->post('/category', function (Request $request)
         'description' => 'nullable|string|max:500',
     ]);
 
-    // Create a new category (Ensure MongoDB field names match)
     Category::create([
-        'category_name' => $request->name, // MongoDB expects 'category_name'
+        'category_name' => $request->name, 
         'description' => $request->description,
     ]);
 
-    // Return a JSON response indicating successp
+    
     return response()->json([
         'message' => 'Category added successfully!',
     ], 201);
@@ -83,7 +82,7 @@ Route::get('/products/{id}', function ($id) {
 
 
 // Route::get('/memberships', function (Request $request) {
-//     // Fetch all membership tiers
+//     // Fetch all membership tiers=
 //     $memberships = MembershipTier::all();
 
 //     // Return the membership tiers as a JSON response
