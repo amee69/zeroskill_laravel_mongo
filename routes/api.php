@@ -160,3 +160,30 @@ Route::middleware('auth:sanctum')->post('/process-order', function (Request $req
 
     return response()->json(['success' => 'Your order has been placed successfully!'], 200);
 });
+
+
+
+
+Route::get('/membership-tier/{id}', function ($id) {
+    try {
+        // Find the membership tier by ID
+        $tier = MembershipTier::find($id);
+
+        if (!$tier) {
+            return response()->json([
+                'error' => 'Membership tier not found.'
+            ], 404);
+        }
+
+        // Return the name of the tier
+        return response()->json([
+            'tier_name' => $tier->tier_name
+        ], 200);
+
+    } catch (\Exception $e) {
+        // Handle any unexpected errors
+        return response()->json([
+            'error' => 'An error occurred: ' . $e->getMessage()
+        ], 500);
+    }
+});
