@@ -7,6 +7,8 @@ use App\Models\MembershipTier;
 use App\Http\Controllers\ApiAuthController;
 use App\Http\Controllers\admin\ManageProductsController;
 use App\Models\Category;
+use App\Models\Cart;
+use App\Models\Order;
 
 
 Route::get('/user', function (Request $request) {
@@ -111,3 +113,50 @@ Route::get('/memberships/{id}', function ($id) {
 
 
 
+//purchase product related api
+
+Route::middleware('auth:sanctum')->post('/process-order', function (Request $request) {
+    // Validate the request
+    $validatedData = $request->validate([
+        'user_id' => 'required|string',
+        'full_name' => 'required|string|max:255',
+        'city' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'house_number' => 'required|string|max:255',
+        'phone_number' => 'required|string|max:15',
+        'items' => 'required|array',
+        'items.*.product_id' => 'required|string',
+        'items.*.product_name' => 'required|string',
+        'items.*.quantity' => 'required|integer|min:1',
+        'items.*.price' => 'required|numeric|min:0',
+    ]);
+
+    // Calculate the total amount
+    $totalAmount = array_reduce($request->input('items'), function ($sum, $item) {
+        return $sum + ($item['price'] * $item['quantity']);
+    }, 0);
+
+    // Prepare the order data
+    $orderData = [
+        'user_id' => $request->input('user_id'),
+        'total_amount' => $totalAmount,
+        'status' => 'processing',
+        'order_date' => now(),
+        'shipping_details' => [
+            'full_name' => $request->input('full_name'),
+            'city' => $request->input('city'),
+            'address' => $request->input('address'),
+            'house_number' => $request->input('house_number'),
+            'phone_number' => $request->input('phone_number'),
+        ],
+        'payment_method' => 'card_payment',
+        'items' => $request->input('items'),
+        'created_at' => now(),
+        'updated_at' => now(),
+    ];
+
+    // Save the order into the orders collection
+    Order::create($orderData);
+
+    return response()->json(['success' => 'Your order has been placed successfully!'], 200);
+});
