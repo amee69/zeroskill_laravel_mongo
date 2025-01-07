@@ -9,6 +9,7 @@ use App\Http\Controllers\admin\ManageProductsController;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Order;
+use Illuminate\Support\Facades\Log;
 
 
 Route::get('/user', function (Request $request) {
@@ -175,15 +176,60 @@ Route::get('/membership-tier/{id}', function ($id) {
             ], 404);
         }
 
-        // Return the name of the tier
         return response()->json([
             'tier_name' => $tier->tier_name
         ], 200);
 
     } catch (\Exception $e) {
-        // Handle any unexpected errors
+        
         return response()->json([
             'error' => 'An error occurred: ' . $e->getMessage()
         ], 500);
+    }
+});
+
+
+Route::middleware('auth:sanctum')->get('/cart/{user_id}', function ($user_id) {
+    // Fetch the cart items for the user
+    $cartItems = Cart::where('user_id', $user_id)->get();
+
+    return response()->json($cartItems);
+});
+
+
+
+Route::middleware('auth:sanctum')->post('/purchase-membership', function (Request $request) {
+    try {
+        $user = $request->user();
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated.'], 401);
+        }
+
+        $tierId = $request->input('tier_id');
+        $membershipTier = App\Models\MembershipTier::find($tierId);
+
+        if (!$membershipTier) {
+            return response()->json(['error' => 'Membership tier not found.'], 404);
+        }
+
+        $startDate = now();
+        $endDate = $startDate->copy()->addDays($membershipTier->period);
+
+        $user->update([
+            'membership' => [
+                'tier_id' => $membershipTier->_id,
+                'start_date' => $startDate->toISOString(),
+                'end_date' => $endDate->toISOString(),
+                'status' => 'Active',
+            ],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Membership purchased successfully!',
+            'membership' => $user->membership,
+        ], 200);
+    } catch (Exception $e) {
+        return response()->json(['error' => 'An unexpected error occurred.'], 500);
     }
 });

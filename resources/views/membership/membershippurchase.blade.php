@@ -21,7 +21,7 @@
                 <div>
                     <!-- Payment Card Number -->
                     <div class="mb-4">
-                        <label for="cardNumber" class="block text-sm font-medium text-gray-700">Card Number:</label>
+                        <label for="cardNumber" class="block text-sm font-medium text-white">Card Number:</label>
                         <input required
                             type="text"
                             id="cardNumber"
@@ -36,7 +36,7 @@
                     <!-- Expiry Date -->
                     <div class="grid grid-cols-2 gap-4 mb-4">
                         <div>
-                            <label for="expiryDateMonth" class="block text-sm font-medium text-gray-700">Expiry Month:</label>
+                            <label for="expiryDateMonth" class="block text-sm font-medium text-white">Expiry Month:</label>
                             <select id="expiryDateMonth" name="expiryDateMonth" required 
                                 class="mt-1 p-2 w-full bg-black text-white border border-gray-300 rounded-md">
                                 <option value="01">January</option>
@@ -54,7 +54,7 @@
                             </select>
                         </div>
                         <div>
-                            <label for="expiryDateYear" class="block text-sm font-medium text-gray-700">Expiry Year:</label>
+                            <label for="expiryDateYear" class="block text-sm font-medium text-white">Expiry Year:</label>
                             <select id="expiryDateYear" name="expiryDateYear" required 
                                 class="mt-1 p-2 w-full bg-black text-white border border-gray-300 rounded-md">
                                 @php
@@ -69,7 +69,7 @@
 
                     <!-- CVV Field -->
                     <div class="mb-4">
-                        <label for="cvv" class="block text-sm font-medium text-gray-700">CVV:</label>
+                        <label for="cvv" class="block text-sm font-medium text-white">CVV:</label>
                         <input type="tel" id="cvv" name="cvv" required maxlength="3" pattern="\d{3,4}"
                             class="mt-1 p-2 w-full bg-black text-white border border-gray-300 rounded-md"
                             inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
