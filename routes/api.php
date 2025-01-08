@@ -233,3 +233,44 @@ Route::middleware('auth:sanctum')->post('/purchase-membership', function (Reques
         return response()->json(['error' => 'An unexpected error occurred.'], 500);
     }
 });
+
+
+
+
+Route::middleware('auth:sanctum')->post('/orders', function (Request $request) {
+    try {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'User not authenticated.'], 401);
+        }
+
+        // Validate pagination inputs (optional)
+        $request->validate([
+            'per_page' => 'sometimes|integer|min:1|max:100',
+            'page' => 'sometimes|integer|min:1',
+        ]);
+
+        $perPage = $request->input('per_page', 10); // Default to 10 per page
+        $page = $request->input('page', 1); // Default to page 1
+
+        $orders = App\Models\Order::where('user_id', $user->id)
+            ->orderBy('order_date', 'desc')
+            ->paginate($perPage, ['*'], 'page', $page);
+
+        return response()->json([
+            'success' => true,
+            'orders' => $orders->items(),
+            'current_page' => $orders->currentPage(),
+            'total_pages' => $orders->lastPage(),
+            'total_orders' => $orders->total(),
+        ], 200);
+
+    } catch (Exception $e) {
+        Log::error($e->getMessage());
+        return response()->json(['error' => 'An unexpected error occurred.'], 500);
+    }
+});
+
+
+
