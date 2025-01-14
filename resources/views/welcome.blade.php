@@ -23,7 +23,20 @@
                         {{ auth()->check() ? 'Membership' : 'Register' }}
                     </button>
                 </a>
+
+                
+        <!-- Shop Button -->
+        <a href="{{ route('shop') }}" class="inline-block mt-4">
+            <button
+                oncontextmenu="return false;"
+                class="text-sm bg-red-600 text-white border-2 border-red-600 rounded-lg px-6 py-2 transition-all duration-300 hover:bg-black hover:border-gray-300">
+                Shop
+            </button>
+        </a>
+                
+                
             </div>
+            
         </div>
 
         <!-- Desktop Content Over Video -->
@@ -40,7 +53,7 @@
                 We have been active since mid-2020, starting as an online course website during the pandemic. 
                 Since then, we have grown into our own gyms. Check out the rest of the page!
             </p>
-            <div class="flex justify-center mt-6 md:mt-10">
+            {{-- <div class="flex justify-center mt-6 md:mt-10">
                 <a href="{{ auth()->check() ? '/membership' : '/login' }}">
                     <button
                         oncontextmenu="return false;"
@@ -48,9 +61,32 @@
                         {{ auth()->check() ? 'Membership' : 'Register' }}
                     </button>
                 </a>
+            </div> --}}
+
+            <div class="flex justify-center space-x-4 mt-6 md:mt-10">
+                <!-- Membership/Register Button -->
+                <a href="{{ auth()->check() ? '/membership' : '/login' }}">
+                    <button
+                        oncontextmenu="return false;"
+                        class="text-lg sm:text-xl bg-black bg-opacity-50 text-white border-2 border-white rounded-3xl px-10 sm:px-12 md:px-24 py-1 transition-all duration-300 hover:bg-red-700 hover:border-gray-300">
+                        {{ auth()->check() ? 'Membership' : 'Register' }}
+                    </button>
+                </a>
+            
+                <!-- Shop Button -->
+                <a href="{{ route('shop') }}">
+                    <button
+                        oncontextmenu="return false;"
+                        class="text-lg sm:text-xl bg-red-600 text-white border-2 border-red-600 rounded-3xl px-10 sm:px-12 md:px-24 py-1 transition-all duration-300 hover:bg-black hover:border-gray-300">
+                        Shop
+                    </button>
+                </a>
             </div>
+            
+            
         </div>
     </div>
+    
 
     <!-- Reviews Section -->
     <div class="mt-10 px-4">
@@ -70,7 +106,7 @@
                 <!-- Review Card 1 -->
                 <div class="bg-red-600 text-white rounded-3xl p-6 w-72 flex-shrink-0">
                     <div class="flex items-center">
-                        <img src="images/user.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        {{-- <img src="images/user.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                         <div class="ml-4">
                             <h2 class="text-lg font-semibold">Member</h2>
                         </div>
@@ -81,7 +117,7 @@
                 <!-- Review Card 2 -->
                 <div class="bg-gray-800 text-white rounded-3xl p-6 w-72 flex-shrink-0">
                     <div class="flex items-center">
-                        <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        {{-- <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                         <div class="ml-4">
                             <h2 class="text-lg font-semibold">Member</h2>
                         </div>
@@ -92,7 +128,7 @@
                 <!-- Review Card 3 -->
                 <div class="bg-gray-800 text-white rounded-3xl p-6 w-72 flex-shrink-0">
                     <div class="flex items-center">
-                        <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        {{-- <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                         <div class="ml-4">
                             <h2 class="text-lg font-semibold">Member</h2>
                         </div>
@@ -103,7 +139,7 @@
                 <!-- Review Card 4 -->
                 <div class="bg-gray-800 text-white rounded-3xl p-6 w-72 flex-shrink-0">
                     <div class="flex items-center">
-                        <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                        {{-- <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                         <div class="ml-4">
                             <h2 class="text-lg font-semibold">Member</h2>
                         </div>
@@ -118,7 +154,7 @@
             <!-- Review Card 1 -->
             <div class="bg-red-600 text-white rounded-3xl p-6">
                 <div class="flex items-center">
-                    <img src="images/user.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    {{-- <img src="images/user.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Member</h2>
                     </div>
@@ -129,7 +165,7 @@
             <!-- Review Card 2 -->
             <div class="bg-gray-800 text-white rounded-3xl p-6">
                 <div class="flex items-center">
-                    <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    {{-- <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Member</h2>
                     </div>
@@ -140,7 +176,7 @@
             <!-- Review Card 3 -->
             <div class="bg-gray-800 text-white rounded-3xl p-6">
                 <div class="flex items-center">
-                    <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    {{-- <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Member</h2>
                     </div>
@@ -151,7 +187,7 @@
             <!-- Review Card 4 -->
             <div class="bg-gray-800 text-white rounded-3xl p-6">
                 <div class="flex items-center">
-                    <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full">
+                    {{-- <img src="images/user2.png" alt="Profile" class="h-12 w-12 rounded-full"> --}}
                     <div class="ml-4">
                         <h2 class="text-lg font-semibold">Member</h2>
                     </div>
