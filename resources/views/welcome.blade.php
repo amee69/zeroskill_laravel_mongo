@@ -195,7 +195,116 @@
                 <p class="italic mt-4">“The equipment is clean and well-maintained. I've been going for a while, and they always keep it in great shape.”</p>
             </div>
         </div>
+
+       
+
+        <div class="mt-24 px-4">
+            <!-- Desktop Layout (Hidden on Mobile) -->
+            <div class="hidden md:block">
+              <h1 class="text-red-600 text-3xl md:text-4xl text-center">Shop</h1>
+              <div class="flex justify-center">
+                <a href="{{ route('shop') }}" class="inline-block mt-4">
+                  <button
+                    oncontextmenu="return false;"
+                    class="text-sm md:text-base bg-red-600 text-white border-2 border-red-600 rounded-lg px-6 py-2 transition-all duration-300 hover:bg-black hover:border-gray-300">
+                    Shop
+                  </button>
+                </a>
+              </div>
+          
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8 p-4 md:p-8">
+                <!-- Left Column: Shop Description -->
+                <div class="flex items-center justify-center bg-gray-800 rounded-full border p-6">
+                  <p class="text-white text-sm md:text-lg leading-relaxed max-w-full md:max-w-md text-center md:text-left">
+                    At <strong>Zeroskill</strong>, we’ve got you covered both in and out of the gym! 💪  
+                    Explore our <strong>online shop</strong> for a wide range of premium supplements, including pre-workouts, BCAAs, mass gainers, 
+                    and more, crafted to elevate your fitness game.  
+                    Don’t miss out on our exclusive <strong>merch collection</strong>, featuring stylish and durable workout gear to keep you motivated and looking your best.  
+                    Shop now and take your fitness journey to the next level—all from the comfort of your home! 🛒✨
+                  </p>
+                </div>
+          
+                <!-- Right Column: Shop Items -->
+                <div class="grid grid-rows-3 gap-6">
+                  <!-- First Item -->
+                  <div class="flex flex-col md:flex-row items-center gap-4 p-4 rounded-lg">
+                    <img src="{{ asset('images/bgbacktransparent.png') }}" alt="Preworkout Image" class="w-full md:w-32 h-32 object-cover rounded">
+                    <p class="text-white text-sm md:text-lg text-center md:text-left">
+                      <strong>Zeroskill Preworkout:</strong> Fuel your workouts with the ultimate energy booster. Designed for athletes to smash personal records and elevate performance.  
+                    </p>
+                  </div>
+                  <!-- Second Item -->
+                  <div class="flex flex-col md:flex-row items-center gap-4 p-4 rounded-lg">
+                    <p class="text-white text-sm md:text-lg text-center md:text-left">
+                      <strong>Zeroskill BCAAs:</strong> Maximize recovery and muscle performance. Our premium BCAAs fuel muscle repair and reduce post-workout soreness.  
+                    </p>
+                    <img src="{{ asset('images/bgnobcaasn.png') }}" alt="BCAA Image" class="w-full md:w-32 h-32 object-cover rounded">
+                  </div>
+                  <!-- Third Item -->
+                  <div class="flex flex-col md:flex-row items-center gap-4 p-4 rounded-lg">
+                    <img src="{{ asset('images/mass.png') }}" alt="Mass Gainer Image" class="w-full md:w-32 h-32 object-cover rounded">
+                    <p class="text-white text-sm md:text-lg text-center md:text-left">
+                      <strong>Zeroskill Mass Gainer:</strong> Build muscle and gain strength with a high-calorie, nutrient-rich formula designed for peak performance.  
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- Mobile Layout (Hidden on Desktop) -->
+            <div class="block md:hidden">
+              <h1 class="text-red-600 text-2xl text-center">Shop</h1>
+
+               <!-- Mobile Button -->
+               <div class="flex justify-center mt-3 mb-4">
+                <a href="{{ route('shop') }}">
+                  <button class="text-sm bg-red-600 text-white border-2 border-red-600 rounded-lg px-6 py-2 transition-all duration-300 hover:bg-black hover:border-gray-300">
+                    Shop Now
+                  </button>
+                </a>
+              </div>
+          
+              <!-- Mobile Shop Description -->
+              <div class="p-4 bg-gray-800 rounded-xl text-white text-sm md:text-lg leading-relaxed">
+                At <strong>Zeroskill</strong>, we’ve got you covered both in and out of the gym! 💪
+                Explore our <strong>online shop</strong> for premium supplements and exclusive merch collection—perfect for elevating your fitness game.
+                Shop now and take your fitness journey to the next level! 🛒✨
+              </div>
+          
+              <!-- Mobile Products Display -->
+              <div class="mt-4 space-y-6">
+                <!-- Product 1 -->
+                <div class="flex flex-col items-center text-center">
+                  <img src="{{ asset('images/bgbacktransparent.png') }}" alt="Preworkout" class="w-40 h-40 object-cover rounded">
+                  <p class="text-white text-lg mt-2"><strong>Zeroskill Preworkout</strong></p>
+                </div>
+                <!-- Product 2 -->
+                <div class="flex flex-col items-center text-center">
+                  <img src="{{ asset('images/bgnobcaasn.png') }}" alt="BCAAs" class="w-40 h-40 object-cover rounded">
+                  <p class="text-white text-lg mt-2"><strong>Zeroskill BCAAs</strong></p>
+                </div>
+                <!-- Product 3 -->
+                <div class="flex flex-col items-center text-center">
+                  <img src="{{ asset('images/mass.png') }}" alt="Mass Gainer" class="w-40 h-40 object-cover rounded">
+                  <p class="text-white text-lg mt-2"><strong>Zeroskill Mass Gainer</strong></p>
+                </div>
+              </div>
+          
+             
+            </div>
+          </div>
+          
+          
+          
+          
+          
+          
     </section>
+
+
+    
+    
+
     
 
 </x-guest-layout>
