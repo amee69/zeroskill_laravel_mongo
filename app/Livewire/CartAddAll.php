@@ -97,12 +97,28 @@ class CartAddAll extends Component
         }
 
         $items = $cart->items;
-        foreach ($items as $index => &$item) {
+        
+        // foreach ($items as $index => &$item) {
+        //     if ($item['product_id'] === $this->productId) {
+        //         if ($item['quantity'] > 1) {
+        //             $item['quantity'] -= 1;
+        //             $item['price'] = $item['quantity'] * $this->price;
+        //         } else {
+        //             unset($items[$index]);
+        //         }
+        //         break;
+        //     }
+        // }
+
+        foreach ($items as $index => $item) {
             if ($item['product_id'] === $this->productId) {
+                $itemFound = true;
                 if ($item['quantity'] > 1) {
-                    $item['quantity'] -= 1;
-                    $item['price'] = $item['quantity'] * $this->price;
+                    // Reduce the quantity by one
+                    $items[$index]['quantity'] -= 1;
+                    $items[$index]['price'] = $items[$index]['quantity'] * $item['price'] / ($items[$index]['quantity'] + 1); // Adjust price
                 } else {
+                    // Remove the item entirely if quantity is 1
                     unset($items[$index]);
                 }
                 break;

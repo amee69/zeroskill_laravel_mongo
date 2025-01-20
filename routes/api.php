@@ -10,6 +10,7 @@ use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 
 Route::get('/user', function (Request $request) {
@@ -108,6 +109,134 @@ Route::get('/memberships/{id}', function ($id) {
     return response()->json($membership);
 });
     
+
+//Cart Related API
+
+Route::middleware('auth:sanctum')->post('/cart/add', function (Request $request) {
+    $request->validate([
+        'user_id' => 'required|exists:users,id', // Validate the provided user ID
+        'product_id' => 'required|exists:products,id',
+    ]);
+
+    $userId = $request->input('user_id'); // Get user ID from request
+    $productId = $request->input('product_id');
+    $quantity = $request->input('quantity', 1); // Default quantity to 1 if not provided
+
+    // Find the product
+    $product = Product::find($productId);
+
+    if (!$product) {
+        return response()->json(['message' => 'Product not found'], 404);
+    }
+
+    // Check stock
+    if ($quantity > $product->stock) {
+        return response()->json(['message' => 'Requested quantity exceeds stock'], 400);
+    }
+
+    // Retrieve or create the cart for the user
+    $cart = Cart::firstOrCreate(['user_id' => $userId]);
+
+    $items = $cart->items ?? [];
+    $found = false;
+
+    // Update existing item in the cart
+    foreach ($items as &$item) {
+        if ($item['product_id'] === $productId) {
+            $item['quantity'] += $quantity;
+            $item['price'] = $item['quantity'] * $product->price;
+            $found = true;
+            break;
+        }
+    }
+
+    // Add new item if not found
+    if (!$found) {
+        $items[] = [
+            'product_id' => $productId,
+            'product_name' => $product->product_name,
+            'quantity' => $quantity,
+            'price' => $product->price * $quantity,
+        ];
+    }
+
+    // Save updated items to the cart
+    $cart->items = $items;
+    $cart->save();
+
+    return response()->json([
+        'message' => 'Product added to cart successfully',
+        'cart' => $cart,
+    ]);
+});
+
+
+//remove product from cart api
+
+Route::middleware('auth:sanctum')->post('/cart/remove', function (Request $request) {
+    $request->validate([
+        'user_id' => 'required|exists:users,id', // Validate the provided user ID
+        'product_id' => 'required|exists:products,id',
+    ]);
+
+    $userId = $request->input('user_id'); // Get user ID from request
+    $productId = $request->input('product_id');
+
+    // Retrieve the cart for the user
+    $cart = Cart::where('user_id', $userId)->first();
+
+    if (!$cart || empty($cart->items)) {
+        return response()->json(['message' => 'item not in cart'], 404);
+    }
+
+    $items = $cart->items;
+    $itemFound = false;
+
+    // Update or remove the item from the cart
+    // foreach ($items as $index => &$item) {
+    //     if ($item['product_id'] === $productId) {
+    //         $itemFound = true;
+    //         if ($item['quantity'] > 1) {
+    //             // Reduce the quantity by one
+    //             $item['quantity'] -= 1;
+    //             $item['price'] = $item['quantity'] * $item['price'] / ($item['quantity'] + 1); // Adjust price
+    //         } else {
+    //             // Remove the item entirely if quantity is 1
+    //             unset($items[$index]);
+    //         }
+    //         break;
+    //     }
+    // }
+
+    foreach ($items as $index => $item) {
+        if ($item['product_id'] === $productId) {
+            $itemFound = true;
+            if ($item['quantity'] > 1) {
+                // Reduce the quantity by one
+                $items[$index]['quantity'] -= 1;
+                $items[$index]['price'] = $items[$index]['quantity'] * $item['price'] / ($items[$index]['quantity'] + 1); // Adjust price
+            } else {
+                // Remove the item entirely if quantity is 1
+                unset($items[$index]);
+            }
+            break;
+        }
+    }
+
+    if (!$itemFound) {
+        return response()->json(['message' => 'product not found in cart'], 404);
+    }
+
+    // Update the cart
+    $cart->items = array_values($items); // Reindex the array
+    $cart->save();
+
+    return response()->json([
+        'message' => 'product removed from cart successfully',
+        'cart' => $cart,
+    ]);
+});
+
 
 
 

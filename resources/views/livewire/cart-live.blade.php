@@ -30,21 +30,22 @@
                                         alt="{{ $item['product_name'] }}"
                                         class="w-20 h-20 object-cover rounded-lg border"> --}}
                                     <div>
-                                        <h3 class="text-lg font-bold text-gray-800">{{ $item['product_name'] }}</h3>
+                                        <h3 class="text-lg font-bold text-gray-800">Product :{{ $item['product_name'] }}</h3>
                                         <p class="text-gray-600">Quantity: {{ $item['quantity'] }}</p>
                                         <p class="text-gray-600">Price: Rs. {{ $item['price'] }}</p>
                                     </div>
                                 </div>
                                 <!-- Add/Remove Buttons -->
                                 <div class="flex space-x-2">
-                                    <button wire:click="addToCart('{{ $item['product_id'] }}')"
-                                        class="bg-green-600 text-white px-6 py-3 rounded shadow hover:bg-green-700 transition">
-                                        +
-                                    </button>
+                                   
                                     <button wire:click="removeFromCart('{{ $item['product_id'] }}')"
                                         class="bg-red-600 text-white px-6 py-3 rounded shadow hover:bg-red-700 transition">
                                         -
                                     </button>
+                                    <button wire:click="addToCart('{{ $item['product_id'] }}')"
+                                    class="bg-green-600 text-white px-6 py-3 rounded shadow hover:bg-green-700 transition">
+                                    +
+                                </button>
                                 </div>
                             </div>
                         @endforeach

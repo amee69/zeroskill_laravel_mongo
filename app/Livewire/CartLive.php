@@ -82,13 +82,28 @@ class CartLive extends Component
 
         $items = $cart->items;
 
-        foreach ($items as $index => &$item) {
+        // foreach ($items as $index => &$item) {
+        //     if ($item['product_id'] === $productId) {
+        //         if ($item['quantity'] > 1) {
+        //             $item['quantity'] -= 1;
+        //             $item['price'] = $item['quantity'] * ($item['price'] / ($item['quantity'] + 1));
+        //         } else {
+        //             unset($items[$index]); // Remove item if quantity reaches 0
+        //         }
+        //         break;
+        //     }
+        // }
+
+        foreach ($items as $index => $item) {
             if ($item['product_id'] === $productId) {
+                $itemFound = true;
                 if ($item['quantity'] > 1) {
-                    $item['quantity'] -= 1;
-                    $item['price'] = $item['quantity'] * ($item['price'] / ($item['quantity'] + 1));
+                    // Reduce the quantity by one
+                    $items[$index]['quantity'] -= 1;
+                    $items[$index]['price'] = $items[$index]['quantity'] * $item['price'] / ($items[$index]['quantity'] + 1); // Adjust price
                 } else {
-                    unset($items[$index]); // Remove item if quantity reaches 0
+                    // Remove the item entirely if quantity is 1
+                    unset($items[$index]);
                 }
                 break;
             }

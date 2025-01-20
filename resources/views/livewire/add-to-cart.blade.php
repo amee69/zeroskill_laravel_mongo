@@ -1,7 +1,7 @@
 <div class="flex flex-col items-start space-y-4">
     <div class="flex items-center space-x-4">
 
-        <!-- Remove from Cart Button -->
+        <!-- Remove -->
         <button 
             wire:click="removeFromCart" 
             class="bg-red-600 text-white px-6 py-3 rounded shadow hover:bg-red-700 transition">
