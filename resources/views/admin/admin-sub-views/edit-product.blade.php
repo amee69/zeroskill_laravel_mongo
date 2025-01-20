@@ -65,7 +65,7 @@
                     </div>
 
                     <!-- Display Existing Images -->
-                    <div class="mb-4">
+                    {{-- <div class="mb-4">
                         <label class="block font-bold mb-2">Current Images</label>
                         <div class="flex space-x-4">
                             @foreach ($product->images as $image)
@@ -74,7 +74,22 @@
                                 </div>
                             @endforeach
                         </div>
-                    </div>
+                    </div> --}}
+
+                    <!-- Display Existing Images -->
+<div class="mb-4">
+    <label class="block font-bold mb-2">Current Images</label>
+    <div class="flex space-x-4">
+        @forelse ($product->images ?? [] as $image) <!-- Use forelse to handle empty array case -->
+            <div>
+                <img src="{{ asset($image) }}" alt="Product Image" class="w-32 h-32 object-cover rounded border">
+            </div>
+        @empty
+            <p class="text-gray-500">No images available.</p> <!-- Show message if no images exist -->
+        @endforelse
+    </div>
+</div>
+
 
                     <!-- Upload New Images -->
                     <div class="mb-4">
