@@ -79,7 +79,7 @@
                     <!-- Upload New Images -->
                     <div class="mb-4">
                         <label for="images" class="block font-bold mb-2">Upload New Images</label>
-                        <input type="file" name="images[]" id="images" multiple accept="image/*" class="border px-4 py-2 rounded w-full text-black">
+                        <input type="file" name="images[]" id="images" multiple accept="image/*" class="border px-4 py-2 rounded w-full text-white">
                     </div>
 
                     <!-- Submit Button -->
