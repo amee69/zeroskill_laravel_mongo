@@ -22,11 +22,13 @@
             <div class="flex flex-col md:flex-row space-y-4 md:space-y-0">
                 <!-- Sidebar for Large Screens -->
                 <aside class="w-full md:w-48 bg-zeroskill-black text-gray-300 rounded-lg shadow-lg border border-white hidden lg:block p-4">
-                    <h2 class="text-xl font-bold text-white mb-6 pl-2">All Categories</h2> <!-- Added padding and spacing -->
+                    <a  href="{{ route('shop') }}" class="text-xl font-bold text-white mb-8 pl-2">All Categories</a> 
                     <ul class="pl-1/2"> <!-- Added padding to the left -->
                         @foreach ($categories as $category)
                             <li class="mb-2"> <!-- Added margin between items -->
                                 <a href="{{ route('shop.category', $category->category_name) }}" 
+
+                                    {{-- below is only for the styling of the name --}}
                                    class="block p-2 rounded-md transition hover:bg-gray-700 hover:text-white 
                                           {{ request()->is('shop/category/'.$category->category_name) ? 'bg-gray-700 text-white font-bold' : '' }}">
                                    {{ $category->category_name }}
