@@ -34,6 +34,25 @@
         <input type="file" wire:model="images" id="images" multiple accept="image/*" class="border px-4 py-2 rounded w-full text-white">
         @error('images.*') <span class="text-red-500">{{ $message }}</span> @enderror
 
+        <!-- Loading Indicator -->
+        <div wire:loading wire:target="images" class="mt-4 text-center">
+            <p class="text-white">Uploading images...</p>
+            <svg class="animate-spin h-8 w-8 text-white mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0v0H4z"></path>
+            </svg>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="mt-4 flex flex-wrap gap-1">
+            @if ($images)
+                @foreach ($images as $image)
+                    <div>
+                        <img src="{{ $image->temporaryUrl() }}" alt="Preview" class="w-16 h-16 object-cover rounded">
+                    </div>
+                @endforeach
+            @endif
+        </div>
         
         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
             Add Product
