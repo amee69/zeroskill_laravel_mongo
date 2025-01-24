@@ -46,12 +46,13 @@ class ManageProducts extends Component
         }
 
         $stock = (int) $this->stock;
+        $price = (int) $this->price;
 
         // Create the product and embed the images directly
         Product::create([
             'product_name' => $this->product_name,
             'description' => $this->description,
-            'price' => $this->price,
+            'price' => $price,
             'stock' => $stock,
             'category_id' => $this->category_id,
             'images' => $imagePaths, 

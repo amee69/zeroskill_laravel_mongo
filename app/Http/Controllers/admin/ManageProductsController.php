@@ -173,7 +173,7 @@ public function updateProduct(Request $request, $id)
 
     $product->product_name = $validatedData['product_name'];
     $product->description = $validatedData['description'];
-    $product->price = $validatedData['price'];
+    $product->price = (int)$validatedData['price'];
     $product->stock = (int) $validatedData['stock']; 
     $product->category_id = $validatedData['category_id'];
 
