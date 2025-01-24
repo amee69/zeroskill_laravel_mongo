@@ -56,7 +56,9 @@
                                     <div>
                                         <h3 class="text-lg font-bold text-gray-800">Product :{{ $item['product_name'] }}</h3>
                                         <p class="text-gray-600">Quantity: {{ $item['quantity'] }}</p>
-                                        <p class="text-gray-600">Price: Rs. {{ $item['price'] }}</p>
+                                        <p class="text-gray-600">Price per item: Rs. {{ number_format($item['price'] / $item['quantity'], 2) }}</p>
+                                        <p class="text-gray-600">Total Price: Rs. {{ $item['price'] }}</p>
+
                                     </div>
                                 </div>
                                 <!-- Add/Remove Buttons -->
@@ -114,7 +116,11 @@
                                 <div class="flex flex-col text-sm space-y-1 w-3/4">
                                     <span class="font-bold">{{ $item['product_name'] }}</span>
                                     <span>Quantity: {{ $item['quantity'] }}</span>
-                                    <span>Price: Rs. {{ $item['price'] }}</span>
+                                   
+<p class="text-gray-600">Price per item: Rs. {{ number_format($item['price'] / $item['quantity'], 2) }}</p>
+<p class="text-gray-600">Total Price: Rs. {{ $item['price'] }}</p>
+
+                                  
                                 </div>
                                 <!-- Add/Remove Buttons -->
                                 <div class="flex flex-col space-y-2 w-1/4">

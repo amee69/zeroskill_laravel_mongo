@@ -123,12 +123,9 @@ class CartLive extends Component
     }
 
     public function calculateTotal()
-{
-    $this->total = array_reduce($this->products, function ($carry, $item) {
-        return $carry + ($item['price'] * $item['quantity']);
-    }, 0);
-}
-
+    {
+        $this->total = array_reduce($this->products, fn($carry, $item) => $carry + $item['price'], 0);
+    }
 
     public function render()
     {
