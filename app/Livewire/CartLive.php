@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
+use App\Models\Product; // Assuming Product is your product model
 
 class CartLive extends Component
 {
@@ -44,23 +45,41 @@ class CartLive extends Component
         // Ensure `items` is an array
         $items = $cart->items ?? [];
 
+        // Fetch the product details from the database (assumes you have a Product model)
+        $product = Product::find($productId);
+
+        if (!$product) {
+            session()->flash('error', 'Product not found.');
+            return;
+        }
+
         $found = false;
         foreach ($items as &$item) {
             if ($item['product_id'] === $productId) {
-                $item['quantity'] += 1;
-                $item['price'] = $item['quantity'] * ($item['price'] / ($item['quantity'] - 1));
-                $found = true;
+                if ($item['quantity'] < $product->stock) {
+                    $item['quantity'] += 1;
+                    $item['price'] = $item['quantity'] * ($item['price'] / ($item['quantity'] - 1)); // Adjust price
+                    $found = true;
+                } else {
+                    session()->flash('error', 'Not enough stock for this product.');
+                    return;
+                }
                 break;
             }
         }
 
         if (!$found) {
-            $items[] = [
-                'product_id' => $productId,
-                'product_name' => 'Product Name', // Replace with actual product name
-                'quantity' => 1,
-                'price' => 49.99, // Replace with actual product price
-            ];
+            if ($product->stock > 0) {
+                $items[] = [
+                    'product_id' => $productId,
+                    'product_name' => $product->name, // Assuming 'name' is the product name column
+                    'quantity' => 1,
+                    'price' => $product->price, // Assuming 'price' is the product price column
+                ];
+            } else {
+                session()->flash('error', 'This product is out of stock.');
+                return;
+            }
         }
 
         $cart->items = $items; // Save updated items
@@ -82,21 +101,8 @@ class CartLive extends Component
 
         $items = $cart->items;
 
-        // foreach ($items as $index => &$item) {
-        //     if ($item['product_id'] === $productId) {
-        //         if ($item['quantity'] > 1) {
-        //             $item['quantity'] -= 1;
-        //             $item['price'] = $item['quantity'] * ($item['price'] / ($item['quantity'] + 1));
-        //         } else {
-        //             unset($items[$index]); // Remove item if quantity reaches 0
-        //         }
-        //         break;
-        //     }
-        // }
-
         foreach ($items as $index => $item) {
             if ($item['product_id'] === $productId) {
-                $itemFound = true;
                 if ($item['quantity'] > 1) {
                     // Reduce the quantity by one
                     $items[$index]['quantity'] -= 1;
@@ -120,16 +126,6 @@ class CartLive extends Component
     {
         $this->total = array_reduce($this->products, fn($carry, $item) => $carry + $item['price'], 0);
     }
-
-
-//     public function redirectToCheckout()
-// {
-//     return redirect()->route('checkout');
-// }
-
-
-
-
 
     public function render()
     {

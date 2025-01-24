@@ -8,6 +8,30 @@
             </h1>
         </div>
 
+        <div>
+            <!-- Success Message -->
+            @if (session()->has('success'))
+                <div class="bg-green-500 text-white p-4 rounded-md mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+        
+            <!-- Error Message -->
+            @if (session()->has('error'))
+                <div class="bg-red-500 text-white p-4 rounded-md mb-4">
+                    {{ session('error') }}
+                </div>
+            @endif
+        
+            <!-- Message for Cart -->
+            {{-- @if ($message)
+                <div class="bg-yellow-500 text-white p-4 rounded-md mb-4">
+                    {{ $message }}
+                </div>
+            @endif --}}
+        </div>
+        
+
         <!-- Desktop View -->
         <div class="hidden md:block">
             <!-- Cart Items -->
