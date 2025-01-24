@@ -45,12 +45,14 @@ class ManageProducts extends Component
             $imagePaths[] = 'storage/' . $fileName; // Add path to the array so it can be saved in the databade
         }
 
+        $stock = (int) $this->stock;
+
         // Create the product and embed the images directly
         Product::create([
             'product_name' => $this->product_name,
             'description' => $this->description,
             'price' => $this->price,
-            'stock' => $this->stock,
+            'stock' => $stock,
             'category_id' => $this->category_id,
             'images' => $imagePaths, 
         ]);
