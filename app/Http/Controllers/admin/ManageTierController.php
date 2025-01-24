@@ -44,8 +44,8 @@ class ManageTierController extends Controller
     $tier = new MembershipTier();
     $tier->tier_name = $request->tier_name; // Matches the "name" attribute in the form
     $tier->description = $request->description;
-    $tier->price = $request->price;
-    $tier->period = $request->period;
+    $tier->price = (int) $request->price;
+    $tier->period =(int) $request->period;
     $tier->save();
 
     return redirect()->route('admin.membership.tiers')->with('success', 'Tier added successfully!');

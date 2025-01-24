@@ -10,22 +10,22 @@
         
         <div class="mb-4">
           <label for="tier_name" class="block text-sm font-medium text-gray-900">Tier Name</label>
-          <input type="text" name="tier_name" id="tier_name" value="{{ $tier->tier_name }}" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-black">
+          <input type="text" name="tier_name" id="tier_name" value="{{ $tier->tier_name }}" required class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-black">
         </div>
 
         <div class="mb-4">
           <label for="description" class="block text-sm font-medium text-gray-900">Description</label>
-          <textarea name="description" id="description" rows="4" class="mt-1 block w-full rounded-md shadow-sm text-black border-gray-300 focus:ring-blue-500 focus:border-blue-500">{{ $tier->description }}</textarea>
+          <textarea name="description" id="description" rows="4" required class="mt-1 block w-full rounded-md shadow-sm text-black border-gray-300 focus:ring-blue-500 focus:border-blue-500">{{ $tier->description }}</textarea>
         </div>
 
         <div class="mb-4">
           <label for="price" class="block text-sm font-medium text-gray-700">Price (Rs.)</label>
-          <input type="number" name="price" id="price" value="{{ $tier->price }}" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-black">
+          <input type="number" name="price" id="price" value="{{ $tier->price }}" required class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-black">
         </div>
 
         <div class="mb-4">
           <label for="period" class="block text-sm font-medium text-gray-700">Period (Months)</label>
-          <input type="number" name="period" id="period" value="{{ $tier->period }}" class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-black">
+          <input type="number" name="period" id="period" value="{{ $tier->period }}" required class="mt-1 block w-full rounded-md shadow-sm border-gray-300 focus:ring-blue-500 focus:border-blue-500 text-black">
         </div>
 
         <div class="flex items-center justify-between">

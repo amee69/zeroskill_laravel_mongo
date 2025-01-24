@@ -45,7 +45,7 @@
                                 </div>
                                 <div class="flex justify-center mb-4">
                                     <p class="text-zeroskillMossgreen text-3xl text-green-600">
-                                        ${{ $tier->price }}
+                                        Rs.{{ $tier->price }}
                                     </p>
                                 </div>
                                 <div class="flex justify-center mb-4">
@@ -93,7 +93,7 @@
                         <div class="rounded-xl bg-black/50 backdrop-blur-md border border-white p-4">
                             <h2 class="text-2xl font-bold text-red-500 text-center">{{ $tier->tier_name }}</h2>
                             <p class="text-white text-lg text-center mt-2">{{ $tier->period }} Days</p>
-                            <p class="text-green-600 text-lg text-center mt-2">${{ $tier->price }}</p>
+                            <p class="text-green-600 text-lg text-center mt-2">Rs.{{ $tier->price }}</p>
                             <p class="text-white text-sm text-center mt-2">{{ $tier->description }}</p>
 
                             @if (empty($membershipStatus) || $membershipStatus['status'] === 'Expired')

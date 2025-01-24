@@ -31,8 +31,8 @@
                     <div class="p-4 flex-grow">
                         <p class="text-gray-600 text-sm mb-3">{{ $tier->description }}</p>
                         <div class="text-sm text-gray-700 space-y-2">
-                            <p><span class="font-medium">Price:</span> ${{ $tier->price }}</p>
-                            <p><span class="font-medium">Period:</span> {{ $tier->period }} months</p>
+                            <p><span class="font-medium">Price:</span> Rs.{{ $tier->price }}</p>
+                            <p><span class="font-medium">Period:</span> {{ $tier->period }} Days</p>
                             <p><span class="font-medium">Created At:</span> {{ $tier->created_at ?? 'N/A' }}</p>
                             <p><span class="font-medium">Updated At:</span> {{ $tier->updated_at ?? 'N/A' }}</p>
                         </div>

@@ -13,7 +13,7 @@
                     <p class="text-white text-3xl text-center mb-5">{{ $membershipTier->period }} Days</p>
                     <p class="text-white text-lg px-8 text-center mb-5">{{ $membershipTier->description }}</p>
                     <p class="text-white text-xl text-center">Price: 
-                        <span class="text-green-500">${{ $membershipTier->price }}</span>
+                        <span class="text-green-500">Rs.{{ $membershipTier->price }}</span>
                     </p>
                 </div>
 
