@@ -42,7 +42,7 @@
                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 0116 0v0H4z"></path>
             </svg>
         </div>
-
+{{-- check --}}
         <!-- Preview Section -->
         <div class="mt-4 flex flex-wrap gap-1">
             @if ($images)
