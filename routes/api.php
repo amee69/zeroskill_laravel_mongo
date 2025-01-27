@@ -85,13 +85,7 @@ Route::get('/products/{id}', function ($id) {
 });
 
 
-// Route::get('/memberships', function (Request $request) {
-//     // Fetch all membership tiers=
-//     $memberships = MembershipTier::all();
 
-//     // Return the membership tiers as a JSON response
-//     return response()->json($memberships);
-// });
 
 
 Route::middleware('auth:sanctum')->get('/memberships', function (Request $request) {
@@ -292,6 +286,8 @@ Route::middleware('auth:sanctum')->post('/cart/remove', function (Request $reque
 // });
 
 
+
+
 Route::middleware('auth:sanctum')->post('/process-order', function (Request $request) {
     // Validate the request
     $validatedData = $request->validate([
@@ -309,9 +305,16 @@ Route::middleware('auth:sanctum')->post('/process-order', function (Request $req
     ]);
 
     // Calculate the total amount
-    $totalAmount = array_reduce($request->input('items'), function ($sum, $item) {
-        return $sum + ($item['price'] * $item['quantity']);
-    }, 0);
+    // $totalAmount = array_reduce($request->input('items'), function ($sum, $item) {
+    //     return $sum + ($item['price'] * $item['quantity']);
+    // }, 0);
+
+    $totalAmount = 0;
+
+    foreach ($request->input('items') as $item) {
+        $totalAmount += $item['price'] * $item['quantity'];
+    }
+
 
     // Prepare the order data
     $orderData = [
@@ -432,11 +435,10 @@ Route::middleware('auth:sanctum')->post('/orders', function (Request $request) {
             return response()->json(['error' => 'User not authenticated.'], 401);
         }
 
-        // Validate pagination inputs (optional)
         $request->validate([
             'per_page' => 'sometimes|integer|min:1|max:100',
             'page' => 'sometimes|integer|min:1',
-        ]);
+        ]); //if not provided, default to 10 per page and page 1 \ Below
 
         $perPage = $request->input('per_page', 10); // Default to 10 per page
         $page = $request->input('page', 1); // Default to page 1
