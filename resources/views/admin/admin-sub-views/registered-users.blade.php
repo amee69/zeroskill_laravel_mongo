@@ -24,7 +24,7 @@
             </thead>
             <tbody>
                 @foreach($allusers as $user)
-                    <tr class="hover:bg-gray-100">
+                    <tr class="hover:bg-red-400">
                         <td class="border border-gray-300 px-4 py-2">{{ $user->id }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $user->name }}</td>
                         <td class="border border-gray-300 px-4 py-2">{{ $user->email }}</td>
