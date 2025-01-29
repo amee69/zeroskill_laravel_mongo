@@ -166,7 +166,7 @@ Route::middleware('auth:sanctum')->post('/cart/add', function (Request $request)
 
 
 //remove product from cart api
-
+//delete
 Route::middleware('auth:sanctum')->post('/cart/remove', function (Request $request) {
     $request->validate([
         'user_id' => 'required|exists:users,id', // Validate the provided user ID
