@@ -11,7 +11,7 @@ use App\Models\Cart;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
-
+use Livewire\Attributes\Validate;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -427,6 +427,42 @@ Route::middleware('auth:sanctum')->post('/purchase-membership', function (Reques
 
 
 
+// Route::middleware('auth:sanctum')->post('/orders', function (Request $request) {
+//     try {
+//         $user = $request->user();
+
+//         if (!$user) {
+//             return response()->json(['error' => 'User not authenticated.'], 401);
+//         }
+
+//         $request->validate([
+//             'per_page' => 'sometimes|integer|min:1|max:100',
+//             'page' => 'sometimes|integer|min:1',
+//         ]); //if not provided, default to 10 per page and page 1 \ Below
+
+//         $perPage = $request->input('per_page', 10); // Default to 10 per page
+//         $page = $request->input('page', 1); // Default to page 1
+
+//         $orders = App\Models\Order::where('user_id', $user->id)
+//             ->orderBy('order_date', 'desc')
+//             ->paginate($perPage, ['*'], 'page', $page);
+
+//         return response()->json([
+//             'success' => true,
+//             'orders' => $orders->items(),
+//             'current_page' => $orders->currentPage(),
+//             'total_pages' => $orders->lastPage(),
+//             'total_orders' => $orders->total(),
+//         ], 200);
+
+//     } catch (Exception $e) {
+//         Log::error($e->getMessage());
+//         return response()->json(['error' => 'An unexpected error occurred.'], 500);
+//     }
+// });
+
+
+
 Route::middleware('auth:sanctum')->post('/orders', function (Request $request) {
     try {
         $user = $request->user();
@@ -435,31 +471,47 @@ Route::middleware('auth:sanctum')->post('/orders', function (Request $request) {
             return response()->json(['error' => 'User not authenticated.'], 401);
         }
 
-        $request->validate([
-            'per_page' => 'sometimes|integer|min:1|max:100',
-            'page' => 'sometimes|integer|min:1',
-        ]); //if not provided, default to 10 per page and page 1 \ Below
-
-        $perPage = $request->input('per_page', 10); // Default to 10 per page
-        $page = $request->input('page', 1); // Default to page 1
-
-        $orders = App\Models\Order::where('user_id', $user->id)
+        $orders = Order::where('user_id', $user->id)
             ->orderBy('order_date', 'desc')
-            ->paginate($perPage, ['*'], 'page', $page);
+            ->get(); // Fetch all orders without pagination
 
         return response()->json([
             'success' => true,
-            'orders' => $orders->items(),
-            'current_page' => $orders->currentPage(),
-            'total_pages' => $orders->lastPage(),
-            'total_orders' => $orders->total(),
+            'orders' => $orders,
         ], 200);
 
     } catch (Exception $e) {
-        Log::error($e->getMessage());
-        return response()->json(['error' => 'An unexpected error occurred.'], 500);
+        Log::error('Order fetch error: ' . $e->getMessage());
+
+        return response()->json(['error' => 'Something went wrong.'], 500);
     }
 });
 
 
 
+
+Route::middleware('auth:sanctum')->post('/update-number', function (Request $request) {
+    try {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        $request->validate([
+            'number' => 'required|string|min:10|max:15',
+        ]);
+
+        $user->number = $request->input('number');
+        $user->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Phone number updated successfully!',
+        ], 200);
+    } catch (Exception $e) {
+        Log::error('Update number error: ' . $e->getMessage());
+
+        return response()->json(['error' => 'error'], 500);
+    }
+});

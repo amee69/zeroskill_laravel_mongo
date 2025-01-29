@@ -13,6 +13,10 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+        
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+       
+        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -75,10 +79,11 @@
                 <div class="text-center">
                     <h1 class="text-2xl font-semibold mb-6">Stay Connected</h1>
                     <div class="flex justify-center space-x-6">
-                        <a href="#" class="fa fa-facebook" style="font-size: 40px"></a>
-                        <a href="https://www.instagram.com/_ameer69/" class="fa fa-instagram" style="font-size: 40px"></a>
-                        <a href="#" class="fa fa-twitter" style="font-size: 40px"></a>
+                        <a href="#" class="text-blue-600 text-4xl"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.instagram.com/_ameer69/" class="text-pink-500 text-4xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-blue-400 text-4xl"><i class="fab fa-twitter"></i></a>
                     </div>
+                    
                 </div>
         
                 <!-- Our Mission Section -->
