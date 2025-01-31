@@ -42,6 +42,11 @@
                         <p class="text-gray-600 text-lg font-semibold">{{ $message }}</p>
                         @if ($message === 'Your cart is empty.')
                             <p class="text-gray-500 mt-2">Add some products to your cart to get started!</p>
+
+                            <a href="{{ route('shop') }}"
+                                class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 px-6 rounded-md transition">
+                                Expore shop
+                            </a>
                         @endif
                     </div>
                 @else
@@ -106,6 +111,10 @@
                         <p class="text-gray-600 text-base font-semibold">{{ $message }}</p>
                         @if ($message === 'Your cart is empty.')
                             <p class="text-gray-500 mt-2">Add some products to your cart to get started!</p>
+                            <a href="{{ route('shop') }}"
+                                class="mt-4 inline-block bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold py-3 px-6 rounded-md transition">
+                                Expore shop
+                            </a>
                         @endif
                     </div>
                 @else

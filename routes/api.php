@@ -536,6 +536,32 @@ Route::middleware('auth:sanctum')->post('/update-number', function (Request $req
 
 
 
+// Route::get('/products-search', function (Request $request) {
+//     $query = $request->input('query');  
+
+//     // Check if query is provided
+//     if (!$query) {
+//         return response()->json(['message' => 'Query parameter is required'], 400);
+//     }
+
+//     try {
+//         // Perform the text search using the text operator directly
+//         $products = Product::where('$text', ['$search' => $query])->get();
+
+//         // Check if products are found
+//         if ($products->isEmpty()) {
+//             return response()->json(['message' => 'No products found'], 404);
+//         }
+
+//         return response()->json($products);
+//     } catch (\Exception $e) {
+//         return response()->json(['message' => 'Error occurred during search'], 500);
+//     }
+// })->middleware( ['throttle:api']);
+
+
+
+
 Route::get('/products-search', function (Request $request) {
     $query = $request->input('query');  
 
@@ -557,4 +583,4 @@ Route::get('/products-search', function (Request $request) {
     } catch (\Exception $e) {
         return response()->json(['message' => 'Error occurred during search'], 500);
     }
-})->middleware( 'throttle:api');
+})->middleware('throttle:api');

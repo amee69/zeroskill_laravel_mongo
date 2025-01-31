@@ -8,6 +8,8 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Log;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -31,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
 
 
         RateLimiter::for('api', function ($request) {
-            return Limit::perMinute(2)->by( $request->ip());
+            Log::info('Applying rate limit for IP: ' . $request->ip());  // Log IP
+            return Limit::perMinute(2)->by($request->ip());
         });
     }
 }
