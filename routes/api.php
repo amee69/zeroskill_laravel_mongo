@@ -13,14 +13,32 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Validate;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+// use MongoDB\BSON\Regex;
+
+// Route::middleware('auth:sanctum')->get('/products/search', function (Request $request) {
+//     $query = $request->input('query');
+
+//     if (!$query) {
+//         return response()->json(['message' => 'Query parameter is required'], 400);
+//     }
+
+//     // Ensure correct MongoDB regex search for partial matches
+//     $products = Product::where('product_name', 'regex', new Regex(".*$query.*", 'i'))->get();
+
+//     return response()->json($products);
+// });
+
+
+// Route::get('/user', function (Request $request) {
+//     return $request->user();
+// })->middleware('auth:sanctum');
 
 
 
 // Public routes
 Route::post('/register', [ApiAuthController::class, 'register']); 
+
+
 Route::post('/login', [ApiAuthController::class, 'login']);       
 
 Route::post('/logout', [ApiAuthController::class, 'logout'])->middleware('auth:sanctum');
@@ -169,7 +187,7 @@ Route::middleware('auth:sanctum')->post('/cart/add', function (Request $request)
 //delete
 Route::middleware('auth:sanctum')->post('/cart/remove', function (Request $request) {
     $request->validate([
-        'user_id' => 'required|exists:users,id', // Validate the provided user ID
+        'user_id' => 'required|exists:users,id', // Validate the provided user ID (can use the toekn to see who the user id is too)
         'product_id' => 'required|exists:products,id',
     ]);
 
@@ -515,3 +533,28 @@ Route::middleware('auth:sanctum')->post('/update-number', function (Request $req
         return response()->json(['error' => 'error'], 500);
     }
 });
+
+
+
+Route::get('/products-search', function (Request $request) {
+    $query = $request->input('query');  
+
+    // Check if query is provided
+    if (!$query) {
+        return response()->json(['message' => 'Query parameter is required'], 400);
+    }
+
+    try {
+        // Perform the text search using the text operator directly
+        $products = Product::where('$text', ['$search' => $query])->get();
+
+        // Check if products are found
+        if ($products->isEmpty()) {
+            return response()->json(['message' => 'No products found'], 404);
+        }
+
+        return response()->json($products);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error occurred during search'], 500);
+    }
+})->middleware( 'throttle:api');

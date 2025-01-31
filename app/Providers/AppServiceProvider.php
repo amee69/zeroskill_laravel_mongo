@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -24,5 +28,10 @@ class AppServiceProvider extends ServiceProvider
 
         $loader->alias(\Laravel\Sanctum\PersonalAccessToken::class, \App\Models\PersonalAccessToken::class);
         //
+
+
+        RateLimiter::for('api', function ($request) {
+            return Limit::perMinute(2)->by( $request->ip());
+        });
     }
 }
