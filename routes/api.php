@@ -86,10 +86,10 @@ Route::middleware('auth:sanctum')->get('/protected', function () {
 //api stuff below MAD
 
 Route::get('/products', function (Request $request) {
-    // Fetch all products with pagination (10 per page) and sort by creation date in descending order
+    
     $products = Product::orderBy('created_at', 'desc')->paginate(10);
 
-    // Return the products as a JSON response
+    
     return response()->json($products);
 });
 
@@ -98,7 +98,7 @@ Route::get('/products/{id}', function ($id) {
     // Fetch the product by its ID
     $product = Product::find($id);
 
-    // Return the product as a JSON response
+    
     return response()->json($product);
 });
 
@@ -184,6 +184,7 @@ Route::middleware('auth:sanctum')->post('/cart/add', function (Request $request)
 
 
 //remove product from cart api
+
 //delete
 Route::middleware('auth:sanctum')->post('/cart/remove', function (Request $request) {
     $request->validate([

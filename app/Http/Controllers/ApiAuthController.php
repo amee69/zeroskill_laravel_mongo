@@ -56,64 +56,106 @@ class ApiAuthController extends Controller
 
     
 
-    public function login(Request $request)
-    {
-        // Validate input
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+    // public function login(Request $request)
+    // {
+    //     // Validate input
+    //     $request->validate([
+    //         'email' => 'required|email',
+    //         'password' => 'required',
+    //     ]);
     
-        try {
-            // Retrieve the user
-            $user = User::where('email', trim($request->email))->first();
+    //     try {
+    //         // Retrieve the user
+    //         $user = User::where('email', trim($request->email))->first();
             
-            if (!$user) {
-                return response()->json(['message' => 'User not found'], 404);
-            }
+    //         if (!$user) {
+    //             return response()->json(['message' => 'User not found'], 404);
+    //         }
     
-            // Log the user details for debugging
-            Log::info("User found: " . $user->email);
+    //         // Log the user details for debugging
+    //         Log::info("User found: " . $user->email);
     
-            // Check if password matches
-            if (Hash::check($request->password, $user->password)) {
-                // Generate a token
-                $token = bin2hex(random_bytes(40)); // Generate a random token string
+    //         // Check if password matches
+    //         if (Hash::check($request->password, $user->password)) {
+    //             // Generate a token
+    //             $token = bin2hex(random_bytes(40)); 
     
-                // Log token creation attempt
-                Log::info("Token generated for user: " . $user->email);
+    //             // log
+    //             Log::info("Token generated for user: " . $user->email);
     
-                // Create a new token record and associate it with the user
-                $user->tokens()->create([
-                    'tokenable_id' => $user->_id,
-                    'tokenable_type' => get_class($user),
-                    'name' => 'api-token',
-                    'token' => hash('sha256', $token),
-                    'abilities' => ['*']
-                ]);
+    //             // Create a new token record and associate it with the user
+    //             $user->tokens()->create([
+    //                 'tokenable_id' => $user->_id,
+    //                 'tokenable_type' => get_class($user),
+    //                 'name' => 'api-token',
+    //                 'token' => hash('sha256', $token),
+    //                 'abilities' => ['*']
+    //             ]);
     
-                Log::info("Token saved for user: " . $user->email);
+    //             Log::info("Token saved for user: " . $user->email);
     
-                return response()->json([
-                    'message' => 'Login successful',
-                    'token' => $token,
-                    'user' => $user,
-                ]);
-            }
+    //             return response()->json([
+    //                 'message' => 'Login successful',
+    //                 'token' => $token,
+    //                 'user' => $user,
+    //             ]);
+    //         }
     
-            return response()->json(['message' => 'Invalid credentials'], 401);
+    //         return response()->json(['message' => 'Invalid credentials'], 401);
     
-        } catch (\Exception $e) {
-            // Log the error
-            Log::error("Login failed for email " . $request->email . ": " . $e->getMessage());
+    //     } catch (\Exception $e) {
+    //         // Log the error
+    //         Log::error("Login failed for email " . $request->email . ": " . $e->getMessage());
     
-            // Return a generic error response
-            return response()->json([
-                'message' => 'An error occurred during login. Please try again later.',
-            ], 500);
+    //         // Return a generic error response
+    //         return response()->json([
+    //             'message' => 'An error occurred during login. Please try again later.',
+    //         ], 500);
+    //     }
+    // }
+    
+
+public function login(Request $request)
+{
+    // Validate input
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+    ]);
+
+    try {
+        // Retrieve the user
+        $user = User::where('email', trim($request->email))->first();
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
         }
+
+        // Check if password matches
+        if (!Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
+        }
+
+        // Generate Sanctum token
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        return response()->json([
+            'message' => 'Login successful',
+            'token' => $token,
+            'user' => $user,
+            'token_type' => 'Bearer',
+        ]);
+
+    } catch (\Exception $e) {
+        Log::error("Login failed for email " . $request->email . ": " . $e->getMessage());
+
+        return response()->json([
+            'message' => 'An error occurred during login. Please try again later.',
+        ], 500);
     }
-    
+}
+
+
 
 
 
