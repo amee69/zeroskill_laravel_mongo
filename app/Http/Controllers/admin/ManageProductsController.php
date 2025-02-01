@@ -258,13 +258,23 @@ public function markAsCompleted($id)
 
 
 
+// public function manageOrderHistory()
+// {
+    
+//     $orders = Order::whereIn('status', ['completed', 'cancelled', 'Refunded_Cancelled'])->paginate(10);
+    
+//     return view('admin.admin-sub-views.manage-order-history', compact('orders'));
+// }
+
 public function manageOrderHistory()
 {
-    
-    $orders = Order::whereIn('status', ['completed', 'cancelled', 'Refunded_Cancelled'])->paginate(10);
+    $orders = Order::whereIn('status', ['completed', 'cancelled', 'Refunded_Cancelled'])
+                   ->orderBy('created_at', 'desc')  // Sort by created_at in descending order
+                   ->paginate(10);
     
     return view('admin.admin-sub-views.manage-order-history', compact('orders'));
 }
+
 
 
 public function singleOrderHistory($id)
