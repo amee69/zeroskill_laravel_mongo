@@ -39,7 +39,7 @@
                         <div class="flex justify-end space-x-4">
                             @if ($order->payment_method === 'cash_on_delivery')
                                 <!-- Cancel Button for Cash on Delivery -->
-                                <button type="submit" class="bg-yellow-500 text-white px-6 py-2 rounded hover:bg-yellow-600 transition duration-300">
+                                <button type="submit" class="bg-red-500 text-white px-6 py-2 rounded hover:bg-red-600 transition duration-300">
                                     Cancel Order
                                 </button>
                             @elseif ($order->payment_method === 'card_payment')
