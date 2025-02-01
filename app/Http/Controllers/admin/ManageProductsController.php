@@ -4,9 +4,13 @@ namespace App\Http\Controllers\admin;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Order;
+use App\Mail\OrderCompleted;
+use App\Mail\OrderCancelled;
+use Illuminate\Support\Facades\Mail;
 
 class ManageProductsController extends Controller
 {
@@ -240,6 +244,14 @@ public function markAsCompleted($id)
     $order->status = 'completed';
     $order->save();
 
+
+     $user = User::find($order->user_id);
+
+     if ($user) {
+         
+         Mail::to($user->email)->send(new OrderCompleted($order));
+     }
+
     // Redirect to the manage-orders view with a success message
     return redirect()->route('admin.manage.orders')->with('success', 'Order Marked as Completed & Moved To Order History!');
 }
@@ -295,6 +307,15 @@ public function cancelOrder(Request $request, $id)
 
     
     $order->save();
+
+
+     // Fetch the user email
+     $user = User::find($order->user_id);
+
+     if ($user) {
+         // Send order cancellation email
+         Mail::to($user->email)->send(new OrderCancelled($order));
+     }
 
     
     return redirect()->route('admin.manage.orders')->with('success', 'Order Cancelled Successfully!');

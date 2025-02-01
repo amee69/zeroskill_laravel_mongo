@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MembershipTier;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\MembershipConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 
 use Carbon\Carbon; 
@@ -76,7 +78,14 @@ public function purchaseProcess(Request $request)
         ],
     ]);
 
-    
+
+     // Fetch the updated user and send email
+      // Fetch the updated user
+      $user = Auth::user();
+
+      // Send membership confirmation email
+      Mail::to($user->email)->send(new MembershipConfirmation($user, $membershipTier, $startDate, $endDate));
+  
     return redirect()->route('membership')->with('success', 'Membership purchased successfully!');
 }
 

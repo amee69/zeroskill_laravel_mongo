@@ -8,6 +8,8 @@ use App\Models\Cart;
 use Illuminate\Support\Facades\DB; // For MongoDB connection
 use App\Models\Order; // Import the Order model
 use App\Models\Product; // Import the Product model
+use App\Mail\OrderConfirmationMail; 
+use Illuminate\Support\Facades\Mail; 
 
 class CheckoutController extends Controller
 {
@@ -119,6 +121,9 @@ public function process(Request $request)
     // Clear the cart
     $cart->items = [];
     $cart->save();
+
+    // Send confirmation email
+    Mail::to(Auth::user()->email)->send(new OrderConfirmationMail($orderData));
 
     return redirect()->route('order.confirmation')->with('success', 'Your order has been placed successfully!');
 }
